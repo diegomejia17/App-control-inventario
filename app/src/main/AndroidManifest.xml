@@ -12,6 +12,15 @@
         android:theme="@style/Theme.ControlInventario"
         tools:targetApi="31">
         <activity
+            android:name=".Materia"
+            android:exported="false" />
+        <activity
+            android:name=".LibroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AutorActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
