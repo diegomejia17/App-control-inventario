@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.controlinventario.R;
 
-public class Materia extends AppCompatActivity {
+public class MateriaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
