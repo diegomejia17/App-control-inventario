@@ -12,13 +12,13 @@
         android:theme="@style/Theme.ControlInventario"
         tools:targetApi="31">
         <activity
-            android:name=".Materia"
+            android:name=".Materia.MateriaActivity"
             android:exported="false" />
         <activity
-            android:name=".LibroActivity"
+            android:name=".Libro.LibroActivity"
             android:exported="false" />
         <activity
-            android:name=".AutorActivity"
+            android:name=".Autor.AutorActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
