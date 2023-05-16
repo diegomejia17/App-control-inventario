@@ -18,7 +18,7 @@
             android:name=".Libro.LibroActivity"
             android:exported="false" />
         <activity
-            android:name=".Autor.AutorActivity"
+            android:name=".Autor.AutorMenuActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

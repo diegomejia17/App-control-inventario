@@ -1,5 +1,6 @@
-package com.example.controlinventario;
+package com.example.controlinventario.Autor;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,48 +9,46 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+import com.example.controlinventario.R;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    String values[] = {
-            "Autor.AutorMenuActivity", "Libro.LibroActivity",
+public class AutorMenuActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    public final String  values[] = {
+            "Autor.AutorActivity", "Libro.LibroActivity",
             "Materia.MateriaActivity", "CheckBoxActivity",
             "RadioButtonActivity", "GalleryActivity",
             "SpinnerActivity", "TabWidgetActivity"
     };
-    String ViewValues[] = {
-            "Autor", "Libro", "Materia"
+    AutorEntity autorEntity = new AutorEntity();
+
+    public final String ViewValues[] = {
+            "Crear","Buscar por ID", "Ver todos", "Modificar" , "Eliminar"
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_autor);
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, ViewValues);
         ListView listView = (ListView) findViewById(R.id.listV);
         listView.setAdapter(adaptador);
         listView.setOnItemClickListener(this);
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
-        db.autorDao().findAll().forEach(autorEntity -> {
-            System.out.println(autorEntity.getNombreAutor());
-        });
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
         String nameValue = values[i];
         try {
             Class<?> clase = Class.forName("com.example.controlinventario." + nameValue);
             startActivity(new Intent(this, clase));
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
     }
+
 }
