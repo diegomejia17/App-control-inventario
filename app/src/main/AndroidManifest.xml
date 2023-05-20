@@ -12,6 +12,21 @@
         android:theme="@style/Theme.ControlInventario"
         tools:targetApi="31">
         <activity
+            android:name=".Autor.DeleteAutorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Autor.UpdateAutorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Autor.AllAutorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Autor.FindByIdAutorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Autor.CreateAutorActivity"
+            android:exported="false" />
+        <activity
             android:name=".Materia.MateriaActivity"
             android:exported="false" />
         <activity

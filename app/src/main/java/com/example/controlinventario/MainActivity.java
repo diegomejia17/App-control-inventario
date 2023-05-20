@@ -32,12 +32,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ListView listView = (ListView) findViewById(R.id.listV);
         listView.setAdapter(adaptador);
         listView.setOnItemClickListener(this);
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
-        db.autorDao().findAll().forEach(autorEntity -> {
-            System.out.println(autorEntity.getNombreAutor());
-        });
-
     }
 
     @Override

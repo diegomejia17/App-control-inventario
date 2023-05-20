@@ -1,43 +1,45 @@
 package com.example.controlinventario.Autor;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Dao;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.Query;
 
+import java.io.Serializable;
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 
 @Entity(tableName = "Autor")
-public class AutorEntity {
+public class AutorEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "IDAUTOR")
     private Long idAutor;
 
     @ColumnInfo(name = "FECHACREACIONAUTOR")
-    private Date fechaCreacionAutor;
+    private Date fechaCreacion;
 
     @ColumnInfo(name = "NOMBREAUTOR")
-    private String nombreAutor;
+    private String nombre;
 
     @ColumnInfo(name = "APELLIDOAUTOR")
-    private String apellidoAutor;
+    private String apellido;
 
 
     public AutorEntity() {
     }
 
+    public AutorEntity( Date fechaCreacionAutor, String nombreAutor, String apellidoAutor) {
+
+        this.fechaCreacion = fechaCreacionAutor;
+        this.nombre = nombreAutor;
+        this.apellido = apellidoAutor;
+    }
     public AutorEntity(Long idAutor, Date fechaCreacionAutor, String nombreAutor, String apellidoAutor) {
         this.idAutor = idAutor;
-        this.fechaCreacionAutor = fechaCreacionAutor;
-        this.nombreAutor = nombreAutor;
-        this.apellidoAutor = apellidoAutor;
+        this.fechaCreacion = fechaCreacionAutor;
+        this.nombre = nombreAutor;
+        this.apellido = apellidoAutor;
     }
+
 
     public Long getIdAutor() {
         return idAutor;
@@ -47,27 +49,27 @@ public class AutorEntity {
         this.idAutor = idAutor;
     }
 
-    public Date getFechaCreacionAutor() {
-        return fechaCreacionAutor;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFechaCreacionAutor(Date fechaCreacionAutor) {
-        this.fechaCreacionAutor = fechaCreacionAutor;
+    public void setFechaCreacion(Date fechaCreacionAutor) {
+        this.fechaCreacion = fechaCreacionAutor;
     }
 
-    public String getNombreAutor() {
-        return nombreAutor;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreAutor(String nombreAutor) {
-        this.nombreAutor = nombreAutor;
+    public void setNombre(String nombreAutor) {
+        this.nombre = nombreAutor;
     }
 
-    public String getApellidoAutor() {
-        return apellidoAutor;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setApellidoAutor(String apellidoAutor) {
-        this.apellidoAutor = apellidoAutor;
+    public void setApellido(String apellidoAutor) {
+        this.apellido = apellidoAutor;
     }
 }

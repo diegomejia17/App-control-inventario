@@ -14,10 +14,9 @@ import com.example.controlinventario.R;
 public class AutorMenuActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public final String  values[] = {
-            "Autor.AutorActivity", "Libro.LibroActivity",
-            "Materia.MateriaActivity", "CheckBoxActivity",
-            "RadioButtonActivity", "GalleryActivity",
-            "SpinnerActivity", "TabWidgetActivity"
+            "Autor.CreateAutorActivity", "Autor.FindByIdAutorActivity",
+            "Autor.AllAutorActivity", "Autor.CreateAutorActivity",
+            "Autor.DeleteAutorActivity"
     };
     AutorEntity autorEntity = new AutorEntity();
 
@@ -44,7 +43,10 @@ public class AutorMenuActivity extends AppCompatActivity implements AdapterView.
         String nameValue = values[i];
         try {
             Class<?> clase = Class.forName("com.example.controlinventario." + nameValue);
-            startActivity(new Intent(this, clase));
+            Intent intent = new Intent(this,clase);
+            if (ViewValues[i].equals("Crear")) intent.putExtra("isEditMode",false);
+            if (ViewValues[i].equals("Modificar")) intent.putExtra("isEditMode",true);
+            startActivity(intent);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
