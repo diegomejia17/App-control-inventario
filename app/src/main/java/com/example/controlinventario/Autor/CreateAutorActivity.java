@@ -63,7 +63,8 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
             this.nombre.setText(nombre);
             this.apellido.setText(apellido);
-            this.etPlannedDate.setText(fecha.toString());
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            this.etPlannedDate.setText(formatter.format(fecha));
             this.id.setText(id.toString());
 
             actionBar.setTitle("Actualizar Autor");
