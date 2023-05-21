@@ -29,6 +29,7 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     private Boolean isEditMode;
     private ActionBar actionBar;
 
+
     AppDatabase db;
 
 
@@ -70,6 +71,7 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
             actionBar.setTitle("Actualizar Autor");
         } else {
             actionBar.setTitle("Crear Autor");
+
         }
 
         fab.setOnClickListener(view -> {
