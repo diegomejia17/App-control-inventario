@@ -13,54 +13,53 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MenuEscuelaActivity"
+            android:name=".EscuelaJA.MenuEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".MenuCatalogoActivity"
+            android:name=".CatalogoJA.MenuCatalogoActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateEscuelaActivity"
+            android:name=".EscuelaJA.UpdateEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".FindByEscuelaActivity"
+            android:name=".EscuelaJA.FindByEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".DeleteEscuelaActivity"
+            android:name=".EscuelaJA.DeleteEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateEscuelaActivity"
+            android:name=".EscuelaJA.CreateEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateUbicacionActivity"
+            android:name=".UbicacionJA.UpdateUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".FindByIdUbicacionActivity"
+            android:name=".UbicacionJA.FindByIdUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".DeleteUbicacionActivity"
+            android:name=".UbicacionJA.DeleteUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateUbicacionActivity"
+            android:name=".UbicacionJA.CreateUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".FindByIdCatalogoActivity"
+            android:name=".CatalogoJA.FindByIdCatalogoActivity"
             android:exported="false" />
         <activity
-            android:name=".DeleteCatalogoEntiny"
+            android:name=".CatalogoJA.DeleteCatalogoActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateCatalogoActivity"
+            android:name=".CatalogoJA.UpdateCatalogoActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateCatalogoAcrivity"
+            android:name=".CatalogoJA.CreateCatalogoActivity"
             android:exported="false" />
         <activity
             android:name=".Autor.DeleteAutorActivity"

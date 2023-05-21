@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,7 +29,8 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
-
+    private Button btnModificar;
+    private Button btnEliminar;
 
     AppDatabase db;
 
