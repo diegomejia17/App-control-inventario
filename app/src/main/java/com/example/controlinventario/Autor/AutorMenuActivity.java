@@ -15,13 +15,12 @@ public class AutorMenuActivity extends AppCompatActivity implements AdapterView.
 
     public final String  values[] = {
             "Autor.CreateAutorActivity", "Autor.FindByIdAutorActivity",
-            "Autor.AllAutorActivity", "Autor.CreateAutorActivity",
-            "Autor.DeleteAutorActivity"
+            "Autor.AllAutorActivity"
     };
     AutorEntity autorEntity = new AutorEntity();
 
     public final String ViewValues[] = {
-            "Crear","Buscar por ID", "Ver todos", "Modificar" , "Eliminar"
+            "Crear","Buscar por ID", "Ver todos"
     };
 
     @Override
@@ -44,8 +43,6 @@ public class AutorMenuActivity extends AppCompatActivity implements AdapterView.
         try {
             Class<?> clase = Class.forName("com.example.controlinventario." + nameValue);
             Intent intent = new Intent(this,clase);
-            if (ViewValues[i].equals("Crear")) intent.putExtra("isEditMode",false);
-            if (ViewValues[i].equals("Modificar")) intent.putExtra("isEditMode",true);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
