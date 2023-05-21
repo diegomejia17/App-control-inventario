@@ -12,6 +12,57 @@
         android:theme="@style/Theme.ControlInventario"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MenuEscuelaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuCatalogoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateEscuelaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindByEscuelaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DeleteEscuelaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateEscuelaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateUbicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindByIdUbicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DeleteUbicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateUbicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindByIdCatalogoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DeleteCatalogoEntiny"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateCatalogoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateCatalogoAcrivity"
+            android:exported="false" />
+        <activity
             android:name=".Autor.DeleteAutorActivity"
             android:exported="false" />
         <activity
@@ -35,15 +86,6 @@
         <activity
             android:name=".Autor.AutorMenuActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

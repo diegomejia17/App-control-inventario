@@ -9,16 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
+
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    String values[] = {
-            "Autor.AutorMenuActivity", "Libro.LibroActivity",
-            "Materia.MateriaActivity", "CheckBoxActivity",
-            "RadioButtonActivity", "GalleryActivity",
-            "SpinnerActivity", "TabWidgetActivity"
+    String[] values = {
+            "EscuelaJA.MenuEscuelaActivity","UbicacionJA.MenuUbicacionActivity","CatalogoJA.MenuCatalogoActivity",
+           "Autor.AutorMenuActivity", "Libro.LibroActivity", "Materia.MateriaActivity"
+          //  , "CheckBoxActivity", "RadioButtonActivity", "GalleryActivity", "SpinnerActivity", "TabWidgetActivity"
     };
-    String ViewValues[] = {
+    String[] ViewValues = {
+            "Escuela","Ubicación","Catalogo",
             "Autor", "Libro", "Materia"
     };
 
