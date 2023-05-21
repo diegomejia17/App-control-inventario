@@ -85,7 +85,7 @@
             android:id="@+id/botonEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="consultarAutor"
+            android:onClick="eliminar"
             android:text="Eliminar"
             android:visibility="gone" />
 
@@ -93,7 +93,7 @@
             android:id="@+id/botonModificar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Modificar"
+            android:onClick="modificar"
             android:text="Modificar"
             android:visibility="gone" />
 
