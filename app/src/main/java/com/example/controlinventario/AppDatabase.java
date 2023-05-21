@@ -11,23 +11,26 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.controlinventario.Autor.AutorDao;
 import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.Commons.DateConverter;
+import com.example.controlinventario.FacultadJA.FacultadDao;
+import com.example.controlinventario.FacultadJA.FacultadEntity;
 import com.example.controlinventario.Libro.LibroEntity;
 import com.example.controlinventario.Materia.MateriaEntity;
 
-@Database(entities = {AutorEntity.class, LibroEntity.class, MateriaEntity.class}, version = 1)
+@Database(entities = {AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class}, version = 2)
 @TypeConverters({DateConverter.class})
 
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AutorDao autorDao();
+  public  abstract FacultadDao facultadDao();
 
     public static AppDatabase appDb ;
 
     public static AppDatabase getDatabase(Context context){
-        if(appDb == null){
-            appDb = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "dbControlInventario").addCallback(DB_CALLBACK).build();
+       // if(appDb == null){
+            appDb = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "dbControlInventario").addCallback(DB_CALLBACK).fallbackToDestructiveMigration().build();
             appDb.autorDao().findAll();
-        }
+      //  }
         return appDb;
     }
 

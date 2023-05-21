@@ -12,20 +12,24 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.R;
 
 public class MenuFacultadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String[] menu={"Crear", "Eliminar", "Consultar", "Modificar"};
-    String[] activities = {"FacultadJA.CreateFacultadActivity","FacultadJA.DeleteFacultadActivity","FacultadJA.FindByIdFacultadActivity","FacultadJA.CreateFacultadActivity"};
+    String[] ViewValues={"Crear", "Modificar", "Eliminar"};
+    String[] values = {"FacultadJA.CreateFacultadActivity","FacultadJA.FindByIdFacultadActivity","FacultadJA.DeleteFacultadActivity"};
 
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_facultad);
+        setContentView(R.layout.activity_autor);
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, menu);
-       ListView listView = (ListView) findViewById(R.id.listV);
+                android.R.layout.simple_list_item_1, ViewValues);
+        ListView listView = (ListView) findViewById(R.id.listV);
         listView.setAdapter(adaptador);
         listView.setOnItemClickListener(this);
 
@@ -34,12 +38,10 @@ public class MenuFacultadActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-        String nameValue = activities[i];
+        String nameValue = values[i];
         try {
             Class<?> clase = Class.forName("com.example.controlinventario." + nameValue);
             Intent intent = new Intent(this,clase);
-            if (menu[i].equals("Crear")) intent.putExtra("isEditMode",false);
-            if (menu[i].equals("Modificar")) intent.putExtra("isEditMode",true);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

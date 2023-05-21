@@ -41,7 +41,7 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_autor);
+        setContentView(R.layout.activity_create_facultad);
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
@@ -51,7 +51,6 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        this.apellido = findViewById(R.id.apellido);
         this.nombre = findViewById(R.id.nombre);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
