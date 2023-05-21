@@ -4,7 +4,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
 import com.example.controlinventario.Commons.DatePickerFragment;
+import com.example.controlinventario.MainActivity;
 import com.example.controlinventario.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -51,6 +54,8 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         this.apellido = findViewById(R.id.apellido);
         this.nombre = findViewById(R.id.nombre);
         this.id = findViewById(R.id.id);
+        this.btnEliminar = findViewById(R.id.botonEliminar);
+        this.btnModificar = findViewById(R.id.botonModificar);
         etPlannedDate = findViewById(R.id.fecha);
         etPlannedDate.setOnClickListener(this::onClick);
 
@@ -70,7 +75,17 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
             this.etPlannedDate.setText(formatter.format(fecha));
             this.id.setText(id.toString());
 
-            actionBar.setTitle("Actualizar Autor");
+            //activate view for btnEliminar and btnModificar
+            this.btnEliminar.setVisibility(View.VISIBLE);
+            this.btnModificar.setVisibility(View.VISIBLE);
+
+            //no edit fields
+            this.nombre.setEnabled(false);
+            this.apellido.setEnabled(false);
+            this.etPlannedDate.setEnabled(false);
+            this.fab.setVisibility(View.GONE);
+
+            actionBar.setTitle("Información del Autor");
         } else {
             actionBar.setTitle("Crear Autor");
 
@@ -120,6 +135,15 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
             autor.setIdAutor(Long.parseLong(this.id.getText().toString()));
             db.autorDao().update(autor);
             Toast.makeText(getApplicationContext(), "Autor actualizado", Toast.LENGTH_SHORT).show();
+
+            this.btnEliminar.setVisibility(View.VISIBLE);
+            this.btnModificar.setVisibility(View.VISIBLE);
+            //no edit fields
+            this.nombre.setEnabled(false);
+            this.apellido.setEnabled(false);
+            this.etPlannedDate.setEnabled(false);
+            this.fab.setVisibility(View.GONE);
+
             return;
         }
         db.autorDao().insert(autor);
@@ -142,5 +166,54 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         this.apellido.setText("");
         this.etPlannedDate.setText("");
         this.id.setText("");
+    }
+
+    //eliminar autor
+    public void eliminar(View view) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Eliminar dato");
+        builder.setMessage("¿Estás seguro de que quieres eliminar este dato?");
+
+// Agregar botón de confirmación
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Acción de eliminación
+                AutorEntity autorEntity = new AutorEntity();
+                autorEntity.setIdAutor(Long.parseLong(id.getText().toString()));
+                db.autorDao().delete(autorEntity);
+                Toast.makeText(getApplicationContext(), "Autor eliminado", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                finish();
+
+            }
+        });
+
+// Agregar botón de cancelar
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Cancelar eliminación
+                dialog.dismiss();
+            }
+        });
+
+// Mostrar el diálogo
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    //modificar autor
+    public void modificar(View view) {
+        this.nombre.setEnabled(true);
+        this.apellido.setEnabled(true);
+        this.etPlannedDate.setEnabled(true);
+        this.fab.setVisibility(View.VISIBLE);
+        this.btnEliminar.setVisibility(View.GONE);
+        this.btnModificar.setVisibility(View.GONE);
+        Toast.makeText(getApplicationContext(), "Ahora puede modificar los campos", Toast.LENGTH_SHORT).show();
+
     }
 }

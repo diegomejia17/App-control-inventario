@@ -65,12 +65,6 @@
             android:name=".CatalogoUbicacionJA.CreateCatalogoUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".Autor.DeleteAutorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Autor.UpdateAutorActivity"
-            android:exported="false" />
-        <activity
             android:name=".Autor.AllAutorActivity"
             android:exported="false" />
         <activity
