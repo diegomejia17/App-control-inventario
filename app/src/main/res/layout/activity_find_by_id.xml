@@ -15,35 +15,27 @@
         android:padding="@dimen/_10sdp">
 
 
-    <TextView
+    <EditText
         android:id="@+id/buscar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:drawableStart="@drawable/baseline_search_24"
         android:drawablePadding="@dimen/_5sdp"
-        android:background="@color/white"
+        android:background="@drawable/background_input_field"
         android:hint="ID autor"
         android:inputType="number"
         android:padding="@dimen/_10sdp"
-        android:textColor="@color/colorTextSecondary"
+        android:textColor="@color/colorSecondary"
         android:textColorHint="@color/colorSecondary"
-        android:editable="true"
         android:textSize="@dimen/_14sdp" />
 
         <Button
             android:id="@+id/botonConsultar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="consultarAlumno"
+            android:onClick="consultarAutor"
             android:text="Buscar" />
 
-
-
     </LinearLayout>
-
-
-
-
-
 </RelativeLayout>
