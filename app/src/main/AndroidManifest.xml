@@ -23,7 +23,7 @@
             android:name=".EscuelaJA.MenuEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".CatalogoJA.MenuCatalogoActivity"
+            android:name=".CatalogoUbicacionJA.MenuCatalogoUbicacionActivity"
             android:exported="false" />
         <activity
             android:name=".EscuelaJA.UpdateEscuelaActivity"
@@ -38,28 +38,31 @@
             android:name=".EscuelaJA.CreateEscuelaActivity"
             android:exported="false" />
         <activity
-            android:name=".UbicacionJA.UpdateUbicacionActivity"
+            android:name=".FacultadJA.UpdateFacultadActivity"
             android:exported="false" />
         <activity
-            android:name=".UbicacionJA.FindByIdUbicacionActivity"
+            android:name=".FacultadJA.FindByIdFacultadActivity"
             android:exported="false" />
         <activity
-            android:name=".UbicacionJA.DeleteUbicacionActivity"
+            android:name=".FacultadJA.DeleteFacultadActivity"
             android:exported="false" />
         <activity
-            android:name=".UbicacionJA.CreateUbicacionActivity"
+            android:name=".FacultadJA.CreateFacultadActivity"
             android:exported="false" />
         <activity
-            android:name=".CatalogoJA.FindByIdCatalogoActivity"
+            android:name=".FacultadJA.MenuFacultadActivity"
             android:exported="false" />
         <activity
-            android:name=".CatalogoJA.DeleteCatalogoActivity"
+            android:name=".CatalogoUbicacionJA.FindByIdCatalogoUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".CatalogoJA.UpdateCatalogoActivity"
+            android:name=".CatalogoUbicacionJA.DeleteCatalogoUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".CatalogoJA.CreateCatalogoActivity"
+            android:name=".CatalogoUbicacionJA.UpdateCatalogoUbicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CatalogoUbicacionJA.CreateCatalogoUbicacionActivity"
             android:exported="false" />
         <activity
             android:name=".Autor.DeleteAutorActivity"

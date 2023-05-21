@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Control inventario</string>
+    <string name="btnConsultar">Consultar</string>
+    <string name="btnLimpiar">Limpiar</string>
+    <string name="codigo_facultad">Codigo</string>
+    <string name="nombre_facultad">Nombre</string>
+    <string name="btnGuardar">Guardar</string>
 </resources>
