@@ -18,6 +18,7 @@ import com.example.controlinventario.EscuelaJA.EscuelaEntity;
 import com.example.controlinventario.FacultadJA.FacultadDao;
 import com.example.controlinventario.FacultadJA.FacultadEntity;
 import com.example.controlinventario.Libro.LibroEntity;
+import com.example.controlinventario.Materia.MateriaDao;
 import com.example.controlinventario.Materia.MateriaEntity;
 
 @Database(entities = {AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class, EscuelaEntity.class}, version = 1)
@@ -26,6 +27,7 @@ import com.example.controlinventario.Materia.MateriaEntity;
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AutorDao autorDao();
+    public abstract MateriaDao materiaDao();
 
     public abstract FacultadDao facultadDao();
 
@@ -34,10 +36,10 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase INSTANCE;
 
     public static AppDatabase getDatabase(Context context) {
-        if (INSTANCE == null) {
+        //if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "dbControlInventario").fallbackToDestructiveMigration().addCallback(DB_CALLBACK).build();
-        }
+        //}
         return INSTANCE;
     }
 
