@@ -1,7 +1,9 @@
 package com.example.controlinventario;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
+import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -20,24 +22,27 @@ import com.example.controlinventario.Materia.MateriaEntity;
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AutorDao autorDao();
-
-    public static AppDatabase appDb ;
+    public static AppDatabase INSTANCE ;
 
     public static AppDatabase getDatabase(Context context){
-        if(appDb == null){
-            appDb = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "dbControlInventario").addCallback(DB_CALLBACK).build();
-            appDb.autorDao().findAll();
+        if(INSTANCE == null){
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                    AppDatabase.class, "dbControlInventario").fallbackToDestructiveMigration().addCallback(DB_CALLBACK).build();
         }
-        return appDb;
+        return INSTANCE;
     }
 
     private static RoomDatabase.Callback DB_CALLBACK = new RoomDatabase.Callback() {
         @Override
         public void onCreate(SupportSQLiteDatabase db) {
             super.onCreate(db);
-            db.execSQL("INSERT INTO Autor ( FECHACREACIONAUTOR, NOMBREAUTOR, APELLIDOAUTOR) VALUES ( '2021-09-01', 'Juan', 'Perez')");
+           // db.execSQL("INSERT INTO Autor ( FECHACREACIONAUTOR, NOMBREAUTOR, APELLIDOAUTOR) VALUES ( '2021-09-01', 'Juan', 'Perez')");
+
         }
     };
+
+
+
 
 
 

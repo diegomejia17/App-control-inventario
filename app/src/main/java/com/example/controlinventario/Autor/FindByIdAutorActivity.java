@@ -15,7 +15,9 @@ import com.example.controlinventario.R;
 
 import java.util.Optional;
 
-public class FindByIdAutorActivity extends AppCompatActivity {
+public  class FindByIdAutorActivity extends AppCompatActivity {
+
+
 
     private ActionBar actionBar;
     private AppDatabase db;
@@ -28,7 +30,7 @@ public class FindByIdAutorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_find_by_id);
 
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
+                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);

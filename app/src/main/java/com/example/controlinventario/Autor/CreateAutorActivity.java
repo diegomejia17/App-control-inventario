@@ -45,8 +45,10 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
+
+
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
+                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
