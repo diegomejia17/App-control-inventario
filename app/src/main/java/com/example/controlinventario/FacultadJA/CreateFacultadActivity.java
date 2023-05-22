@@ -41,8 +41,8 @@ public class CreateFacultadActivity extends AppCompatActivity implements View.On
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
+       db = Room.databaseBuilder(getApplicationContext(),
+             AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -116,13 +116,13 @@ public class CreateFacultadActivity extends AppCompatActivity implements View.On
 
         String fecha = this.etPlannedDate.getText().toString();
 
-        if (nombre.isEmpty() ||  fecha.isEmpty()) {
+        if (nombre.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        FacultadEntity facultadEntity = new FacultadEntity(date,nombre);
+        FacultadEntity facultadEntity = new FacultadEntity(date, nombre);
         if (isEditMode) {
             facultadEntity.setIdFacultad(Long.parseLong(this.id.getText().toString()));
             db.facultadDao().update(facultadEntity);

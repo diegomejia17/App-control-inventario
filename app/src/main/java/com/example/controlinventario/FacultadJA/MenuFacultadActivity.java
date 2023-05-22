@@ -17,9 +17,8 @@ import com.example.controlinventario.R;
 
 public class MenuFacultadActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String[] ViewValues={"Crear", "Modificar", "Eliminar"};
-    String[] values = {"FacultadJA.CreateFacultadActivity","FacultadJA.FindByIdFacultadActivity","FacultadJA.DeleteFacultadActivity"};
-
+    String[] ViewValues = {"Crear", "Modificar", "Ver todos"};
+    String[] values = {"FacultadJA.CreateFacultadActivity", "FacultadJA.FindByIdFacultadActivity", ""};
 
 
     @Override
@@ -27,8 +26,7 @@ public class MenuFacultadActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autor);
 
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, ViewValues);
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ViewValues);
         ListView listView = (ListView) findViewById(R.id.listV);
         listView.setAdapter(adaptador);
         listView.setOnItemClickListener(this);
@@ -41,11 +39,11 @@ public class MenuFacultadActivity extends AppCompatActivity implements AdapterVi
         String nameValue = values[i];
         try {
             Class<?> clase = Class.forName("com.example.controlinventario." + nameValue);
-            Intent intent = new Intent(this,clase);
+            Intent intent = new Intent(this, clase);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
     }
-    }
+}
