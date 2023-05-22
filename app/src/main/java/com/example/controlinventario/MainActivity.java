@@ -13,20 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     String[] values = {
-            "EscuelaJA.MenuEscuelaActivity","UbicacionJA.MenuUbicacionActivity","CatalogoJA.MenuCatalogoActivity",
+            "EscuelaJA.MenuEscuelaActivity","CatalogoUbicacionJA.MenuCatalogoUbicacionActivity","FacultadJA.MenuFacultadActivity",
            "Autor.AutorMenuActivity", "Libro.LibroActivity", "Materia.MateriaActivity"
-          //  , "CheckBoxActivity", "RadioButtonActivity", "GalleryActivity", "SpinnerActivity", "TabWidgetActivity"
+            , "CheckBoxActivity", "RadioButtonActivity", "GalleryActivity", "SpinnerActivity", "TabWidgetActivity"
     };
     String[] ViewValues = {
-            "Escuela","Ubicación","Catalogo",
+            "Escuela","Ubicación","Facultad",
             "Autor", "Libro", "Materia"
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
+        //AppDatabase.getDatabase(getApplicationContext());
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, ViewValues);
         ListView listView = (ListView) findViewById(R.id.listV);

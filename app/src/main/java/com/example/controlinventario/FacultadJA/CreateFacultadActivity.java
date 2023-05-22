@@ -1,23 +1,21 @@
-package com.example.controlinventario.Autor;
+package com.example.controlinventario.FacultadJA;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
+import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.Commons.DatePickerFragment;
-import com.example.controlinventario.MainActivity;
 import com.example.controlinventario.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,10 +23,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-public class CreateAutorActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private EditText etPlannedDate, nombre, apellido, id;
+public class CreateFacultadActivity extends AppCompatActivity implements View.OnClickListener {
+    private EditText etPlannedDate, nombre, id;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -45,14 +41,11 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
-
-
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
+       db = Room.databaseBuilder(getApplicationContext(),
+             AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-
         this.nombre = findViewById(R.id.nombre);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
@@ -64,14 +57,12 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         isEditMode = intent.getBooleanExtra("isEditMode", false);
 
         if (isEditMode) {
-            AutorEntity autorEntity = (AutorEntity) intent.getSerializableExtra("autorEntity");
-            String nombre = autorEntity.getNombre();
-            String apellido = autorEntity.getApellido();
-            Date fecha = autorEntity.getFechaCreacion();
-            Long id = autorEntity.getIdAutor();
+            FacultadEntity facultadEntity = (FacultadEntity) intent.getSerializableExtra("facultadEntity");
+            String nombre = facultadEntity.getNombre();
+            Date fecha = facultadEntity.getFechaCreacion();
+            Long id = facultadEntity.getIdFacultad();
 
             this.nombre.setText(nombre);
-            this.apellido.setText(apellido);
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
             this.etPlannedDate.setText(formatter.format(fecha));
             this.id.setText(id.toString());
@@ -82,13 +73,13 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
             //no edit fields
             this.nombre.setEnabled(false);
-            this.apellido.setEnabled(false);
+
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
-            actionBar.setTitle("Información del Autor");
+            actionBar.setTitle("Información del Facultad");
         } else {
-            actionBar.setTitle("Crear Autor");
+            actionBar.setTitle("Crear Facultad");
 
         }
 
@@ -122,33 +113,32 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
     private void saveData() throws ParseException {
         String nombre = this.nombre.getText().toString();
-        String apellido = this.apellido.getText().toString();
+
         String fecha = this.etPlannedDate.getText().toString();
 
-        if (nombre.isEmpty() || apellido.isEmpty() || fecha.isEmpty()) {
+        if (nombre.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        AutorEntity autor = new AutorEntity(date, nombre, apellido);
+        FacultadEntity facultadEntity = new FacultadEntity(date, nombre);
         if (isEditMode) {
-            autor.setIdAutor(Long.parseLong(this.id.getText().toString()));
-            db.autorDao().update(autor);
-            Toast.makeText(getApplicationContext(), "Autor actualizado", Toast.LENGTH_SHORT).show();
+            facultadEntity.setIdFacultad(Long.parseLong(this.id.getText().toString()));
+            db.facultadDao().update(facultadEntity);
+            Toast.makeText(getApplicationContext(), "Facultad actualizado", Toast.LENGTH_SHORT).show();
 
             this.btnEliminar.setVisibility(View.VISIBLE);
             this.btnModificar.setVisibility(View.VISIBLE);
             //no edit fields
             this.nombre.setEnabled(false);
-            this.apellido.setEnabled(false);
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
             return;
         }
-        db.autorDao().insert(autor);
-        Toast.makeText(getApplicationContext(), "Autor creado", Toast.LENGTH_SHORT).show();
+        db.facultadDao().insert(facultadEntity);
+        Toast.makeText(getApplicationContext(), "Facultad creado", Toast.LENGTH_SHORT).show();
     }
 
     private String twoDigits(int n) {
@@ -164,12 +154,11 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     //limpiar campos
     public void limpiar() {
         this.nombre.setText("");
-        this.apellido.setText("");
         this.etPlannedDate.setText("");
         this.id.setText("");
     }
 
-    //eliminar autor
+    //eliminar Facultad
     public void eliminar(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -181,10 +170,10 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
-                AutorEntity autorEntity = new AutorEntity();
-                autorEntity.setIdAutor(Long.parseLong(id.getText().toString()));
-                db.autorDao().delete(autorEntity);
-                Toast.makeText(getApplicationContext(), "Autor eliminado", Toast.LENGTH_SHORT).show();
+                FacultadEntity facultadEntity = new FacultadEntity();
+                facultadEntity.setIdFacultad(Long.parseLong(id.getText().toString()));
+                db.facultadDao().delete(facultadEntity);
+                Toast.makeText(getApplicationContext(), "Facultad eliminado", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 finish();
 
@@ -209,7 +198,6 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     //modificar autor
     public void modificar(View view) {
         this.nombre.setEnabled(true);
-        this.apellido.setEnabled(true);
         this.etPlannedDate.setEnabled(true);
         this.fab.setVisibility(View.VISIBLE);
         this.btnEliminar.setVisibility(View.GONE);
