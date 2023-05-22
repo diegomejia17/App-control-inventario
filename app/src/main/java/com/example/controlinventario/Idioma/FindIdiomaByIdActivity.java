@@ -1,4 +1,4 @@
-package com.example.controlinventario.Materia;
+package com.example.controlinventario.Idioma;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,22 +11,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
-import com.example.controlinventario.Autor.AutorEntity;
+import com.example.controlinventario.Materia.MateriaEntity;
 import com.example.controlinventario.R;
 
 import java.util.Optional;
 
-public class findByIdMateria extends AppCompatActivity {
+public class FindIdiomaByIdActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
     private AppDatabase db;
     private EditText id;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_by_id_materia);
+        setContentView(R.layout.activity_find_idioma_by_id);
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
@@ -34,29 +33,30 @@ public class findByIdMateria extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        this.id = findViewById(R.id.buscarMateria);
-        actionBar.setTitle("Buscar Materia");
-
+        this.id = findViewById(R.id.buscarIdioma);
+        actionBar.setTitle("Buscar Idioma");
     }
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
 
-    private Optional<MateriaEntity> findById(Long id) {
-        Optional<MateriaEntity> materiaEntity = Optional.ofNullable(db.materiaDao().findByIdMateria(id));
-        return materiaEntity;
+    private Optional<IdiomaEntity> findById(Long id) {
+        Optional<IdiomaEntity> idiomaEntity = Optional.ofNullable(db.idiomaDao().findByIdIdioma(id));
+        return idiomaEntity;
     }
-    public void consultarMateria(View view) {
+
+
+    public void consultarIdioma(View view) {
         Long id = Long.parseLong(this.id.getText().toString());
-        Optional<MateriaEntity> materiaEntity = findById(id);
-        if (materiaEntity.isPresent()) {
+        Optional<IdiomaEntity> idiomaEntity = findById(id);
+        if (idiomaEntity.isPresent()) {
             try {
-                MateriaEntity materia = materiaEntity.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.Materia.CrudMateriaActivity");
+                IdiomaEntity idioma = idiomaEntity.get();
+                Class<?> clase = Class.forName("com.example.controlinventario.Idioma.CrudIdiomaActivity");
                 Intent intent = new Intent(this, clase);
                 //autorEntity
-                intent.putExtra("materia", materia);
+                intent.putExtra("idioma", idioma);
                 intent.putExtra("isEditMode", true);
                 startActivity(intent);
             } catch (ClassNotFoundException e) {
@@ -65,10 +65,8 @@ public class findByIdMateria extends AppCompatActivity {
             }
             return;
         }
-        Toast.makeText(this, "No existe el autor", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No existe el Idioma", Toast.LENGTH_SHORT).show();
 
     }
-
-
 
 }
