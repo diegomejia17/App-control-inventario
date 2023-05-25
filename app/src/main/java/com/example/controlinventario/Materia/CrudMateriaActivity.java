@@ -77,10 +77,10 @@ public class CrudMateriaActivity extends AppCompatActivity {
 
             this.date.setEnabled(false);
             this.descripcion.setEnabled(false);
-            actionBar.setTitle("Información del Autor");
+            actionBar.setTitle("Información de la materia");
             return;
         }
-        actionBar.setTitle("Crear Autor");
+        actionBar.setTitle("Crear Materia");
 
     }
 
@@ -161,7 +161,7 @@ public class CrudMateriaActivity extends AppCompatActivity {
                 MateriaEntity materia = new MateriaEntity();
                 materia.setIdMateria(Long.parseLong(id.getText().toString()));
                 db.materiaDao().delete(materia);
-                Toast.makeText(getApplicationContext(), "Autor eliminado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Materia eliminada", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 finish();
 

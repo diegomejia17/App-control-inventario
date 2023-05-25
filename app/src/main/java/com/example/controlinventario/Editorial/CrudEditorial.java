@@ -86,7 +86,7 @@ public class CrudEditorial extends AppCompatActivity {
             actionBar.setTitle("Información de la editorial");
             return;
         }
-        actionBar.setTitle("Crear Autor");
+        actionBar.setTitle("Crear editorial");
     }
 
 
@@ -109,7 +109,7 @@ public class CrudEditorial extends AppCompatActivity {
         if (isEditMode) {
             editorial.setId(Long.parseLong(this.id.getText().toString()));
             db.editorialDao().update(editorial);
-            Toast.makeText(getApplicationContext(), "Materia actualizada correctamente.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Editorial actualizada correctamente.", Toast.LENGTH_SHORT).show();
 
             this.btnEliminar.setVisibility(View.VISIBLE);
             this.btnModificar.setVisibility(View.VISIBLE);
@@ -120,7 +120,7 @@ public class CrudEditorial extends AppCompatActivity {
             return;
         }
         db.editorialDao().insert(editorial);
-        Toast.makeText(getApplicationContext(), "Materia creada correctamente.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Editorial creada correctamente.", Toast.LENGTH_SHORT).show();
         cleanFields();
     }
 

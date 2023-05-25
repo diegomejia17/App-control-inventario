@@ -35,7 +35,7 @@ public class FindEditorialById extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
 
         this.id = findViewById(R.id.buscarEditorial);
-        actionBar.setTitle("Buscar Materia");
+        actionBar.setTitle("Buscar Editorial");
     }
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -46,13 +46,13 @@ public class FindEditorialById extends AppCompatActivity {
         Optional<EditorialEntity> editorial = Optional.ofNullable(db.editorialDao().findByIdEditorial(id));
         return editorial;
     }
-    public void consultarMateria(View view) {
+    public void consultarEditorial(View view) {
         Long id = Long.parseLong(this.id.getText().toString());
         Optional<EditorialEntity> editorialObj = findById(id);
         if (editorialObj.isPresent()) {
             try {
                 EditorialEntity editorial = editorialObj.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.Editorial.CrudMateriaActivity");
+                Class<?> clase = Class.forName("com.example.controlinventario.Editorial.CrudEditorial");
                 Intent intent = new Intent(this, clase);
                 //autorEntity
                 intent.putExtra("editorial", editorial);
@@ -64,7 +64,7 @@ public class FindEditorialById extends AppCompatActivity {
             }
             return;
         }
-        Toast.makeText(this, "No existe el autor", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No existe la editorial", Toast.LENGTH_SHORT).show();
 
     }
 

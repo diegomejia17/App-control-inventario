@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class CrudIdiomaActivity extends AppCompatActivity {
 
-    private EditText date, descripcion, id;
+    private EditText date, descripcion, id, nombre;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -57,6 +57,7 @@ public class CrudIdiomaActivity extends AppCompatActivity {
         this.btnEliminar = findViewById(R.id.botonEliminarIdioma);
         this.btnModificar = findViewById(R.id.botonModificariIdioma);
         this.date = findViewById(R.id.fechaIdioma);
+        this.nombre = findViewById(R.id.nombreIdioma);
         date.setOnClickListener(this::onClick);
 
         Intent intent = getIntent();
@@ -67,6 +68,7 @@ public class CrudIdiomaActivity extends AppCompatActivity {
             IdiomaEntity idioma = (IdiomaEntity) intent.getSerializableExtra("idioma");
             this.id.setText(idioma.getId().toString());
             this.descripcion.setText(idioma.getDescricion());
+            this.nombre.setText(idioma.getNombre());
             this.date.setText(formatter.format(idioma.getFechaCreacion()));
 
             this.btnEliminar.setVisibility(View.VISIBLE);
@@ -75,29 +77,31 @@ public class CrudIdiomaActivity extends AppCompatActivity {
 
             this.date.setEnabled(false);
             this.descripcion.setEnabled(false);
-            actionBar.setTitle("Información del Autor");
+            actionBar.setTitle("Información del Idioma");
             return;
         }
-        actionBar.setTitle("Crear Autor");
+        actionBar.setTitle("Crear Idioma");
     }
 
     private void saveData() throws ParseException {
         String descripcion = this.descripcion.getText().toString();
         String fecha = this.date.getText().toString();
+        String nombre = this.nombre.getText().toString();
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Date date = format.parse(fecha);
-        MateriaEntity materia = new MateriaEntity();
+        IdiomaEntity idioma = new IdiomaEntity();
         //validate no empty fields
-        if (descripcion.isEmpty() || fecha.isEmpty()) {
+        if (descripcion.isEmpty() || fecha.isEmpty() || nombre.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             return;
         }
-        materia.setDescripcionMateria(descripcion);
-        materia.setFechaCreacionMateria(date);
+        idioma.setDescricion(descripcion);
+        idioma.setNombre(nombre);
+        idioma.setFechaCreacion(date);
         if (isEditMode) {
-            materia.setIdMateria(Long.parseLong(this.id.getText().toString()));
-            db.materiaDao().update(materia);
-            Toast.makeText(getApplicationContext(), "Materia actualizada correctamente.", Toast.LENGTH_SHORT).show();
+            idioma.setId(Long.parseLong(this.id.getText().toString()));
+            db.idiomaDao().update(idioma);
+            Toast.makeText(getApplicationContext(), "Idioma actualizado correctamente.", Toast.LENGTH_SHORT).show();
 
             this.btnEliminar.setVisibility(View.VISIBLE);
             this.btnModificar.setVisibility(View.VISIBLE);
@@ -106,14 +110,16 @@ public class CrudIdiomaActivity extends AppCompatActivity {
             this.descripcion.setEnabled(false);
             return;
         }
-        db.materiaDao().insert(materia);
-        Toast.makeText(getApplicationContext(), "Materia creada correctamente.", Toast.LENGTH_SHORT).show();
+        db.idiomaDao().insert(idioma);
+        Toast.makeText(getApplicationContext(), "Idioma creado correctamente.", Toast.LENGTH_SHORT).show();
         cleanFields();
     }
+
     public void cleanFields() {
         this.id.setText("");
         this.descripcion.setText("");
         this.date.setText("");
+        this.nombre.setText("");
     }
 
     public boolean onSupportNavigateUp() {
@@ -123,13 +129,15 @@ public class CrudIdiomaActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.fechaMateria:
+            case R.id.fechaIdioma:
                 showDatePickerDialog();
                 break;
         }
     }
+
     public void modificar(View view) {
         this.date.setEnabled(true);
+        this.nombre.setEnabled(true);
         this.descripcion.setEnabled(true);
         this.fab.setVisibility(View.VISIBLE);
         this.btnEliminar.setVisibility(View.GONE);
@@ -137,11 +145,12 @@ public class CrudIdiomaActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Ahora puede modificar los campos", Toast.LENGTH_SHORT).show();
 
     }
+
     public void eliminar(View view) {
-        MateriaEntity materia = new MateriaEntity();
-        materia.setIdMateria(Long.parseLong(this.id.getText().toString()));
-        db.materiaDao().delete(materia);
-        Toast.makeText(getApplicationContext(), "Materia eliminada correctamente.", Toast.LENGTH_SHORT).show();
+        IdiomaEntity idioma = new IdiomaEntity();
+        idioma.setId(Long.parseLong(this.id.getText().toString()));
+        db.idiomaDao().delete(idioma);
+        Toast.makeText(getApplicationContext(), "Idioma eliminada correctamente.", Toast.LENGTH_SHORT).show();
         this.finish();
     }
 
@@ -153,6 +162,7 @@ public class CrudIdiomaActivity extends AppCompatActivity {
         });
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
     private String twoDigits(int n) {
         return (n <= 9) ? ("0" + n) : String.valueOf(n);
     }

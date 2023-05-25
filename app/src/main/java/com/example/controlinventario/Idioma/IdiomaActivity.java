@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.controlinventario.R;
 
-public class idiomaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class IdiomaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private final String values[] = {
-            "Idioma.CrudIdiomaActivity", "Idioma.findByIdIdioma",
+            "Idioma.CrudIdiomaActivity", "Idioma.FindIdiomaByIdActivity",
     };
     private final String ViewValues[] = {
             "Crear","Buscar por ID"
@@ -42,6 +43,7 @@ public class idiomaActivity extends AppCompatActivity implements AdapterView.OnI
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(this, "A ocurrido un error", Toast.LENGTH_SHORT).show();
         }
 
     }

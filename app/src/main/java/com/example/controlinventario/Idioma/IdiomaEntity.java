@@ -5,21 +5,25 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity(tableName = "Idioma")
 public class IdiomaEntity implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "IDIDIOMA")
     private Long id;
+    @ColumnInfo(name = "NOMBREIDIOMA")
+    private String nombre;
     @ColumnInfo(name = "DESCRIPCIONIDIOMA")
-    private String Descricion;
+    private String descricion;
     @ColumnInfo(name = "FECHACREACIONIDIOMA")
-    private String FechaCreacion;
+    private Date fechaCreacion;
 
-    public IdiomaEntity(Long id, String descricion, String fechaCreacion) {
+    public IdiomaEntity(Long id, String nombre, String descricion, Date fechaCreacion) {
         this.id = id;
-        Descricion = descricion;
-        FechaCreacion = fechaCreacion;
+        this.nombre = nombre;
+        this.descricion = descricion;
+        this.fechaCreacion = fechaCreacion;
     }
 
     public IdiomaEntity() {
@@ -33,19 +37,27 @@ public class IdiomaEntity implements Serializable {
         this.id = id;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getDescricion() {
-        return Descricion;
+        return descricion;
     }
 
     public void setDescricion(String descricion) {
-        Descricion = descricion;
+        this.descricion = descricion;
     }
 
-    public String getFechaCreacion() {
-        return FechaCreacion;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
-        FechaCreacion = fechaCreacion;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }

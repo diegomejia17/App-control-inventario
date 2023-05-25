@@ -18,7 +18,7 @@
             android:name=".Idioma.CrudIdiomaActivity"
             android:exported="false" />
         <activity
-            android:name=".Idioma.idiomaActivity"
+            android:name=".Idioma.IdiomaActivity"
             android:exported="false" />
         <activity
             android:name=".Editorial.FindEditorialById"
