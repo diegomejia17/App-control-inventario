@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CrudMateriaActivity extends AppCompatActivity {
-    private EditText date, descripcion, id;
+    private EditText date, descripcion, id, nombre;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -55,6 +55,7 @@ public class CrudMateriaActivity extends AppCompatActivity {
         });
 
         this.id = findViewById(R.id.idMateria);
+        this.nombre = findViewById(R.id.nombreMateria);
         this.descripcion = findViewById(R.id.descripcionMateria);
         this.btnEliminar = findViewById(R.id.botonEliminarMateria);
         this.btnModificar = findViewById(R.id.botonModificarMateria);
@@ -68,6 +69,7 @@ public class CrudMateriaActivity extends AppCompatActivity {
         if (isEditMode) {
             MateriaEntity materia = (MateriaEntity) intent.getSerializableExtra("materia");
             this.id.setText(materia.getIdMateria().toString());
+            this.nombre.setText(materia.getNombre());
             this.descripcion.setText(materia.getDescripcionMateria());
             this.date.setText(formatter.format(materia.getFechaCreacionMateria()));
 
@@ -85,16 +87,18 @@ public class CrudMateriaActivity extends AppCompatActivity {
     }
 
     private void saveData() throws ParseException {
+        String nombre = this.nombre.getText().toString();
         String descripcion = this.descripcion.getText().toString();
         String fecha = this.date.getText().toString();
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = format.parse(fecha);
-        MateriaEntity materia = new MateriaEntity();
         //validate no empty fields
-        if (descripcion.isEmpty() || fecha.isEmpty()) {
+        if (descripcion.isEmpty() || fecha.isEmpty() || nombre.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             return;
         }
+        MateriaEntity materia = new MateriaEntity();
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = format.parse(fecha);
+        materia.setNombre(nombre);
         materia.setDescripcionMateria(descripcion);
         materia.setFechaCreacionMateria(date);
         if (isEditMode) {

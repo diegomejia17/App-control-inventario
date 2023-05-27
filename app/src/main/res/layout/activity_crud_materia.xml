@@ -14,6 +14,21 @@
         android:orientation="vertical"
         android:padding="@dimen/_10sdp">
 
+        <EditText
+            android:id="@+id/nombreMateria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/background_input_field"
+            android:drawableStart="@drawable/ic_baseline_text_fields_24"
+            android:drawablePadding="@dimen/_5sdp"
+            android:hint="Nombre"
+            android:inputType="text"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:textSize="@dimen/_14sdp" />
+
 
         <!--         editText for name input-->
         <EditText
@@ -30,6 +45,9 @@
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
             android:textSize="@dimen/_14sdp" />
+
+
+
 
         <!--        editText for phone input-->
 

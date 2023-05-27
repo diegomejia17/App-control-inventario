@@ -17,6 +17,8 @@ public class MateriaEntity implements Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "IDMATERIA")
     private Long idMateria;
+    @ColumnInfo(name = "NOMBREMATERIA")
+    private String nombre;
 
     @ColumnInfo(name = "FECHACREACIONMATERIA")
 
@@ -30,7 +32,14 @@ public class MateriaEntity implements Serializable {
     public MateriaEntity() {
     }
 
-    public MateriaEntity(Long idMateria,  Date fechaCreacionMateria,  String descripcionMateria) {
+    public MateriaEntity(Long idMateria, String nombre, Date fechaCreacionMateria, String descripcionMateria) {
+        this.idMateria = idMateria;
+        this.nombre = nombre;
+        this.fechaCreacionMateria = fechaCreacionMateria;
+        this.descripcionMateria = descripcionMateria;
+    }
+
+    public MateriaEntity(Long idMateria, Date fechaCreacionMateria, String descripcionMateria) {
         this.idMateria = idMateria;
         this.fechaCreacionMateria = fechaCreacionMateria;
         this.descripcionMateria = descripcionMateria;
@@ -44,7 +53,7 @@ public class MateriaEntity implements Serializable {
         this.idMateria = idMateria;
     }
 
-    @NonNull
+
     public Date getFechaCreacionMateria() {
         return fechaCreacionMateria;
     }
@@ -53,12 +62,20 @@ public class MateriaEntity implements Serializable {
         this.fechaCreacionMateria = fechaCreacionMateria;
     }
 
-    @NonNull
+
     public String getDescripcionMateria() {
         return descripcionMateria;
     }
 
     public void setDescripcionMateria( String descripcionMateria) {
         this.descripcionMateria = descripcionMateria;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }
