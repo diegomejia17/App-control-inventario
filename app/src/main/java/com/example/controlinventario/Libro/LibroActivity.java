@@ -1,38 +1,54 @@
 package com.example.controlinventario.Libro;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
 import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.CategoriaLibro.CategoriaLibroEntity;
+import com.example.controlinventario.Commons.DatePickerFragment;
 import com.example.controlinventario.Editorial.EditorialEntity;
 import com.example.controlinventario.Idioma.IdiomaEntity;
 import com.example.controlinventario.Materia.MateriaEntity;
 import com.example.controlinventario.R;
+import com.example.controlinventario.manytomanytables.AutorLibroEntity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LibroActivity extends AppCompatActivity {
+    private Boolean isEditMode;
 
     private SearchView searchAutor, searchEditorial, searchIdioma, searchMateria, searchCategoriaLibro;
-    private EditText id,tomo,isbn,fechaPublicacion,descripcion,fechaCreacion,titulo ;
+    private EditText id, tomo, isbn, fechaPublicacion, descripcion, fechaCreacion, titulo;
     public ChipGroup chipGroup;
     public List<String> suggestionAutorList, suggestionEditorialList, suggestionIdiomaList, suggestionMateriaList, suggestionCategoriaLibroList;
+    private ActionBar actionBar;
+
+    private FloatingActionButton fab;
+    private Button btnModificar, btnEliminar;
     AppDatabase db;
 
     @Override
@@ -42,14 +58,27 @@ public class LibroActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
+
+        actionBar = getSupportActionBar();
+        fab = findViewById(R.id.fabLibro);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
         // inicializacion de variables EditText
-        id = findViewById(R.id.idLibro);
-        tomo = findViewById(R.id.tomoLibro);
-        isbn = findViewById(R.id.isbnLibro);
-        fechaPublicacion = findViewById(R.id.fechaPublicacionLibro);
-        descripcion = findViewById(R.id.descripcionLibro);
-        fechaCreacion = findViewById(R.id.fechaLibro);
-        titulo = findViewById(R.id.tituloLibro);
+        this.id = findViewById(R.id.idLibro);
+        this.tomo = findViewById(R.id.tomoLibro);
+        this.isbn = findViewById(R.id.isbnLibro);
+        this.fechaPublicacion = findViewById(R.id.fechaPublicacionLibro);
+        this.descripcion = findViewById(R.id.descripcionLibro);
+        this.fechaCreacion = findViewById(R.id.fechaLibro);
+        this.titulo = findViewById(R.id.tituloLibro);
+
+        this.fechaCreacion.setOnClickListener(this::onClick);
+        this.fechaPublicacion.setOnClickListener(this::onClick);
+
+        Intent intent = getIntent();
+        isEditMode = intent.getBooleanExtra("isEditMode", false);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 
         //inicializacion de variables de busqueda
@@ -75,6 +104,57 @@ public class LibroActivity extends AppCompatActivity {
         int toIdiomas[] = {R.id.searchIdiomaID};
         int toMaterias[] = {R.id.searchMateriaID};
         int toCategorias[] = {R.id.searchCategoriaID};
+
+
+        if (isEditMode) {
+            LibroEntity libro = (LibroEntity) intent.getSerializableExtra("libro");
+            this.id.setText(libro.getIdLibro().toString());
+            this.tomo.setText(libro.getTomoLibro().toString());
+            this.isbn.setText(libro.getIsbnLibro().toString());
+            this.fechaPublicacion.setText(formatter.format(libro.getFechaPublicacionLibro()));
+            this.descripcion.setText(libro.getDescripcionLibro());
+            this.fechaCreacion.setText(formatter.format(libro.getFechaCreacionLibro()));
+            this.titulo.setText(libro.getTituloLibro());
+
+            this.searchIdioma.setQuery(buscarPorId(libro.getIdIdioma(), this.suggestionIdiomaList), false);
+            this.searchCategoriaLibro.setQuery(buscarPorId(libro.getIdCategoriaLibro(), this.suggestionCategoriaLibroList), false);
+            this.searchMateria.setQuery(buscarPorId(libro.getIdMateria(), this.suggestionMateriaList), false);
+            this.searchEditorial.setQuery(buscarPorId(libro.getIdEditorial(), this.suggestionEditorialList), false);
+
+            db.autorLibroDao().getLibroConAutores(libro.getIdLibro()).autores.forEach(
+                    autor -> {
+                        Chip chip = new Chip(this);
+                        chip.setText(buscarPorId(autor.getIDAUTOR(), this.suggestionAutorList));
+                        chip.setCloseIconVisible(true);
+                        chip.setOnCloseIconClickListener(v -> {
+                            // Remove the chip from chip group
+                            chipGroup.removeView(chip);
+                        });
+                        chipGroup.addView(chip);
+                    }
+            );
+
+            this.btnEliminar.setVisibility(View.VISIBLE);
+            this.btnModificar.setVisibility(View.VISIBLE);
+            this.fab.setVisibility(View.GONE);
+
+            this.titulo.setEnabled(false);
+            this.isbn.setEnabled(false);
+            this.tomo.setEnabled(false);
+            this.fechaPublicacion.setEnabled(false);
+            this.fechaCreacion.setEnabled(false);
+            this.descripcion.setEnabled(false);
+
+            this.searchIdioma.setEnabled(false);
+            this.searchCategoriaLibro.setEnabled(false);
+            this.searchMateria.setEnabled(false);
+            this.searchEditorial.setEnabled(false);
+            this.searchAutor.setEnabled(false);
+
+            actionBar.setTitle("Información del libro");
+            return;
+        }
+        actionBar.setTitle("Crear Materia");
 
 
         SimpleCursorAdapter cursorAutorAdapter = new SimpleCursorAdapter(LibroActivity.this, R.layout.suggestion_autor, null, from, toAutor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
@@ -287,12 +367,75 @@ public class LibroActivity extends AppCompatActivity {
                 searchCategoriaLibro.setQuery(selection, false);
                 return true;
             }
+
             @Override
             public boolean onSuggestionSelect(int position) {
                 return false;
             }
         });
 
+        fab.setOnClickListener(view -> {
+            try {
+                saveData();
+            } catch (ParseException e) {
+                notificacion("Error al guardar datos");
+                throw new RuntimeException(e);
+            }
+        });
+
+    }
+
+    private void saveData() throws ParseException {
+        String titulo = this.titulo.getText().toString();
+        String isbn = this.isbn.getText().toString();
+        String tomo = this.tomo.getText().toString();
+        String fechaPublicacion = this.fechaPublicacion.getText().toString();
+        String descripcion = this.descripcion.getText().toString();
+        String fechaCreacion = this.fechaCreacion.getText().toString();
+
+        String editorial = this.searchEditorial.getQuery().toString();
+        String idioma = this.searchIdioma.getQuery().toString();
+        String materia = this.searchMateria.getQuery().toString();
+        String categoria = this.searchCategoriaLibro.getQuery().toString();
+
+        List<String> autores = new ArrayList<>();
+        for (int i = 0; i < this.chipGroup.getChildCount(); i++) {
+            Chip chip = (Chip) this.chipGroup.getChildAt(i);
+            autores.add(chip.getText().toString());
+        }
+
+        if (titulo.isEmpty() || isbn.isEmpty() || tomo.isEmpty() || fechaPublicacion.isEmpty() || descripcion.isEmpty() || fechaCreacion.isEmpty() || editorial.isEmpty() || idioma.isEmpty() || materia.isEmpty() || categoria.isEmpty() || autores.isEmpty()) {
+            notificacion("Debe llenar todos los campos");
+            return;
+        }
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        Long idLibro = (this.db.libroDao().getLastId()) ;
+        LibroEntity libro = new LibroEntity();
+        libro.setIdLibro((idLibro == null) ? 1 : idLibro + 1);
+        libro.setTituloLibro(titulo);
+        libro.setIsbnLibro(Long.parseLong(isbn));
+        libro.setTomoLibro(Long.parseLong(tomo));
+        libro.setFechaPublicacionLibro(format.parse(fechaPublicacion));
+        libro.setDescripcionLibro(descripcion);
+        libro.setFechaCreacionLibro(format.parse(fechaCreacion));
+
+
+        libro.setIdCategoriaLibro(this.db.categoriaLibroDao().findAllCategoriaLibro().get(this.suggestionCategoriaLibroList.indexOf(categoria)).getId());
+        libro.setIdEditorial(this.db.editorialDao().findAll().get(this.suggestionEditorialList.indexOf(editorial)).getId());
+        libro.setIdIdioma(this.db.idiomaDao().findAll().get(this.suggestionIdiomaList.indexOf(idioma)).getId());
+        libro.setIdMateria(this.db.materiaDao().findAll().get(this.suggestionMateriaList.indexOf(materia)).getIdMateria());
+
+        ArrayList<AutorLibroEntity> autorLibroEntities = new ArrayList<>();
+        for (String autor : autores) {
+            String[] split = autor.split("-");
+            Long idAutor = Long.parseLong(split[0]);
+            autorLibroEntities.add(new AutorLibroEntity(idAutor, libro.getIdLibro()));
+        }
+
+        this.db.libroDao().insert(libro);
+        autorLibroEntities.forEach(al -> this.db.autorLibroDao().insert(al));
+        notificacion("Libro guardado con exito");
     }
 
     private List<String> listaAutores() {
@@ -380,5 +523,35 @@ public class LibroActivity extends AppCompatActivity {
 
     void notificacion(String texto) {
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
+    }
+
+    private String twoDigits(int n) {
+        return (n <= 9) ? ("0" + n) : String.valueOf(n);
+    }
+
+    private void showDatePickerDialog(View v) {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance((datePicker, year, month, day) -> {
+            // +1 because January is zero
+            final String selectedDate = twoDigits(day) + "/" + (twoDigits(month + 1)) + "/" + year;
+            switch (v.getId()) {
+                case R.id.fechaPublicacionLibro:
+                    fechaPublicacion.setText(selectedDate);
+                    break;
+                case R.id.fechaLibro:
+                    fechaCreacion.setText(selectedDate);
+                    break;
+            }
+        });
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void onClick(View view) {
+        showDatePickerDialog(view);
+    }
+
+    public String buscarPorId(Long id, List<String> e) {
+
+        return e.stream().filter(cadena -> cadena.startsWith(id.toString() + "-")).findFirst().orElseGet(() -> "No encontrado");
+
     }
 }

@@ -29,9 +29,7 @@ public class CrudMateriaActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
-    private Button btnModificar;
-    private Button btnEliminar;
-
+    private Button btnModificar, btnEliminar;
     AppDatabase db;
 
     @Override
@@ -40,8 +38,7 @@ public class CrudMateriaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crud_materia);
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fabMateria);
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
+        db = AppDatabase.getDatabase(getApplicationContext());
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 

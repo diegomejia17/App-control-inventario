@@ -220,7 +220,7 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/botonEliminarMateria"
+                android:id="@+id/botonEliminarLibro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="eliminar"
@@ -228,7 +228,7 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/botonModificarMateria"
+                android:id="@+id/botonModificarLibro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="modificar"
@@ -246,7 +246,7 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabMateria"
+        android:id="@+id/fabLibro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

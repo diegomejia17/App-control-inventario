@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.example.controlinventario.CategoriaLibro.CategoriaLibroEntity;
 import com.example.controlinventario.Editorial.EditorialEntity;
 import com.example.controlinventario.Idioma.IdiomaEntity;
 import com.example.controlinventario.Materia.MateriaEntity;
@@ -24,7 +25,11 @@ import java.util.Date;
                 @ForeignKey(
                         entity = IdiomaEntity.class,
                         parentColumns = "IDIDIOMA",
-                        childColumns = "IDIDIOMA")
+                        childColumns = "IDIDIOMA"),
+                @ForeignKey(
+                        entity = CategoriaLibroEntity.class,
+                        parentColumns = "IDCATEGORIALIBRO",
+                        childColumns = "IDCATEGORIALIBRO")
         })
 
 public class LibroEntity {
@@ -63,7 +68,25 @@ public class LibroEntity {
     @ColumnInfo(name = "IDIDIOMA")
     private long idIdioma;
 
+    @ColumnInfo(name = "IDCATEGORIALIBRO")
+    private Long idCategoriaLibro;
+
     public LibroEntity() {
+    }
+
+    public LibroEntity(Long idLibro, String tituloLibro, Date fechaCreacionLibro, String descripcionLibro, Long isbnLibro, Date fechaPublicacionLibro, Long edicionLibro, Long tomoLibro, Long idMateria, Long idEditorial, long idIdioma, Long idCategoriaLibro) {
+        this.idLibro = idLibro;
+        this.tituloLibro = tituloLibro;
+        this.fechaCreacionLibro = fechaCreacionLibro;
+        this.descripcionLibro = descripcionLibro;
+        this.isbnLibro = isbnLibro;
+        this.fechaPublicacionLibro = fechaPublicacionLibro;
+        this.edicionLibro = edicionLibro;
+        this.tomoLibro = tomoLibro;
+        this.idMateria = idMateria;
+        this.idEditorial = idEditorial;
+        this.idIdioma = idIdioma;
+        this.idCategoriaLibro = idCategoriaLibro;
     }
 
     public LibroEntity(Long idLibro, String tituloLibro, Date fechaCreacionLibro, String descripcionLibro, Long isbnLibro, Date fechaPublicacionLibro, Long edicionLibro, Long tomoLibro, Long idMateria, Long idEditorial, long idIdioma) {
@@ -179,5 +202,13 @@ public class LibroEntity {
 
     public void setTituloLibro(String tituloLibro) {
         this.tituloLibro = tituloLibro;
+    }
+
+    public Long getIdCategoriaLibro() {
+        return idCategoriaLibro;
+    }
+
+    public void setIdCategoriaLibro(Long idCategoriaLibro) {
+        this.idCategoriaLibro = idCategoriaLibro;
     }
 }

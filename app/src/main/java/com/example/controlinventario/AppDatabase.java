@@ -27,14 +27,17 @@ import com.example.controlinventario.Libro.LibroDao;
 import com.example.controlinventario.Libro.LibroEntity;
 import com.example.controlinventario.Materia.MateriaDao;
 import com.example.controlinventario.Materia.MateriaEntity;
+import com.example.controlinventario.manytomanytables.AutorLibroEntity;
+import com.example.controlinventario.manytomanytables.LibroAutorDAO;
 
-@Database(entities = {EditorialEntity.class,AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class, EscuelaEntity.class, IdiomaEntity.class, CategoriaLibroEntity.class}, version = 1)
+@Database(entities = {EditorialEntity.class,AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class, EscuelaEntity.class, IdiomaEntity.class, CategoriaLibroEntity.class, AutorLibroEntity.class}, version = 1)
 @TypeConverters({DateConverter.class})
 
 public abstract class AppDatabase extends RoomDatabase {
     public abstract LibroDao libroDao();
     public abstract CategoriaLibroDao categoriaLibroDao();
     public abstract EditorialDao editorialDao();
+    public abstract LibroAutorDAO autorLibroDao();
 
     public abstract AutorDao autorDao();
     public abstract MateriaDao materiaDao();
@@ -47,10 +50,10 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase INSTANCE;
 
     public static AppDatabase getDatabase(Context context) {
-        //if (INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, "dbControlInventario").fallbackToDestructiveMigration().addCallback(DB_CALLBACK).build();
-        //}
+                    AppDatabase.class, "dbControlInventario").allowMainThreadQueries().addCallback(DB_CALLBACK).build();
+        }
         return INSTANCE;
     }
 

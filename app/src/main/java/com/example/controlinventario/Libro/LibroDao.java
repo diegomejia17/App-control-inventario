@@ -14,4 +14,7 @@ public interface LibroDao extends GenericDAO<LibroEntity> {
 
     @Query("SELECT * FROM Libro WHERE idLibro = :id")
     LibroEntity findById(int id);
+
+    @Query("Select l.IDMATERIA from Libro l  order by l.IDMATERIA desc limit 1")
+    Long getLastId();
 }
