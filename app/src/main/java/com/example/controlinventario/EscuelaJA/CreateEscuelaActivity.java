@@ -25,9 +25,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CreateEscuelaActivity  extends AppCompatActivity implements View.OnClickListener{
+public class CreateEscuelaActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText etPlannedDate, nombre, id,txtidFacultad;
+    private EditText etPlannedDate, nombre, id, txtidFacultad;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -79,7 +79,7 @@ public class CreateEscuelaActivity  extends AppCompatActivity implements View.On
 
             //no edit fields
             this.nombre.setEnabled(false);
-this.txtidFacultad.setEnabled(false);
+            this.txtidFacultad.setEnabled(false);
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
@@ -120,6 +120,7 @@ this.txtidFacultad.setEnabled(false);
     private void saveData() throws ParseException {
         String nombre = this.nombre.getText().toString();
         String idFacultad = this.txtidFacultad.getText().toString();
+        String id = this.id.getText().toString();
         String fecha = this.etPlannedDate.getText().toString();
 
         if (nombre.isEmpty() || fecha.isEmpty() || idFacultad.isEmpty()) {
@@ -128,7 +129,7 @@ this.txtidFacultad.setEnabled(false);
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        EscuelaEntity escuelaEntity = new EscuelaEntity(date, nombre, Long.parseLong( idFacultad));
+        EscuelaEntity escuelaEntity = new EscuelaEntity(date, nombre, Long.parseLong(id));
         if (isEditMode) {
             escuelaEntity.setIdMateria(Long.parseLong(this.id.getText().toString()));
             db.escuelaDao().update(escuelaEntity);

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MenuCatalogoUbicacionActivity extends ListActivity {
+    public class MenuCatalogoUbicacionActivity extends ListActivity {
     String[] menu={"Ingresar Catalogo", "Eliminar Catalogo", "Consultar Catalogo", "Actualizar Catalogo"};
     String[] activities = {"CatalogoUbicacionJA.CreateCatalogoUbicacionActivity","CatalogoUbicacionJA.DeleteCatalogoUbicacionActivity","CatalogoUbicacionJA.FindByIdCatalogoUbicacionActivity","CatalogoUbicacionJA.UpdateCatalogoUbicacionActivity"};
     @Override

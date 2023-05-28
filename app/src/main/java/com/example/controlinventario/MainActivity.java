@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        //AppDatabase.getDatabase(getApplicationContext());
+   // AppDatabase.getDatabase(getApplicationContext());
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, ViewValues);
         ListView listView = (ListView) findViewById(R.id.listV);
