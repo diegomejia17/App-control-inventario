@@ -14,12 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     String[] values = {
             "EscuelaJA.MenuEscuelaActivity","CatalogoUbicacionJA.MenuCatalogoUbicacionActivity","FacultadJA.MenuFacultadActivity",
-           "Autor.AutorMenuActivity", "Libro.LibroActivity", "Materia.MateriaActivity"
-            , "CheckBoxActivity", "RadioButtonActivity", "GalleryActivity", "SpinnerActivity", "TabWidgetActivity"
+           "Autor.AutorMenuActivity", "Libro.MenuLibroActivity", "Materia.MateriaActivity",
+            "Idioma.IdiomaActivity","Editorial.EditorialActivity","CategoriaLibro.CategoriaLibrosActivity"
     };
     String[] ViewValues = {
             "Escuela","Ubicación","Facultad",
-            "Autor", "Libro", "Materia"
+            "Autor", "Libro", "Materia",
+            "Idioma","Editorial","Categoria"
     };
 
     @Override

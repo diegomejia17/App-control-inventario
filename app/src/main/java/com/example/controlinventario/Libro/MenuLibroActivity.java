@@ -1,4 +1,4 @@
-package com.example.controlinventario.Materia;
+package com.example.controlinventario.Libro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,10 +11,10 @@ import android.widget.ListView;
 
 import com.example.controlinventario.R;
 
-public class MateriaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class MenuLibroActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private final String values[] = {
-            "Materia.CrudMateriaActivity", "Materia.findByIdMateria",
+            "Libro.LibroActivity", "Libro.BuscarLibroIdActivity",
 
     };
     private final String ViewValues[] = {
@@ -24,16 +24,15 @@ public class MateriaActivity extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_materia);
+        setContentView(R.layout.activity_menu_libro);
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, ViewValues);
-        ListView listView = (ListView) findViewById(R.id.listMateria);
+        ListView listView = (ListView) findViewById(R.id.listLibro);
         listView.setAdapter(adaptador);
         listView.setOnItemClickListener(this);
     }
 
-    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         String nameValue = values[i];

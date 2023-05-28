@@ -3,19 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/baseline_fact_check_24"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.ControlInventario"
         tools:targetApi="31">
         <activity
+            android:name=".Libro.MenuLibroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Libro.BuscarLibroIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Idioma.FindIdiomaByIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Idioma.CrudIdiomaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Idioma.IdiomaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Editorial.FindEditorialById"
+            android:exported="false" />
+        <activity
+            android:name=".Editorial.CrudEditorial"
+            android:exported="false" />
+        <activity
+            android:name=".Editorial.EditorialActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoriaLibro.FindByIdCategoriaLibroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoriaLibro.CrudCategoriaLibroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoriaLibro.CategoriaLibrosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Materia.CrudMateriaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Materia.findByIdMateria"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

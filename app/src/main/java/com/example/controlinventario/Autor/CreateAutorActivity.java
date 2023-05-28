@@ -1,23 +1,17 @@
 package com.example.controlinventario.Autor;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.controlinventario.AppDatabase;
 import com.example.controlinventario.Commons.DatePickerFragment;
-import com.example.controlinventario.MainActivity;
 import com.example.controlinventario.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -41,17 +35,21 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_facultad);
+        setContentView(R.layout.activity_create_autor);
+
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
+
+
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database-name").allowMainThreadQueries().build();
+              AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
         this.nombre = findViewById(R.id.nombre);
+        this.apellido = findViewById(R.id.apellido);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
         this.btnModificar = findViewById(R.id.botonModificar);
@@ -70,7 +68,7 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
             this.nombre.setText(nombre);
             this.apellido.setText(apellido);
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             this.etPlannedDate.setText(formatter.format(fecha));
             this.id.setText(id.toString());
 
@@ -146,6 +144,7 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
             return;
         }
         db.autorDao().insert(autor);
+        limpiar();
         Toast.makeText(getApplicationContext(), "Autor creado", Toast.LENGTH_SHORT).show();
     }
 

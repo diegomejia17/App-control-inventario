@@ -1,4 +1,4 @@
-package com.example.controlinventario.Autor;
+package com.example.controlinventario.Idioma;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,23 +11,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
+import com.example.controlinventario.Materia.MateriaEntity;
 import com.example.controlinventario.R;
 
 import java.util.Optional;
 
-public  class FindByIdAutorActivity extends AppCompatActivity {
-
-
+public class FindIdiomaByIdActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
     private AppDatabase db;
-    EditText id;
-
+    private EditText id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_by_id);
+        setContentView(R.layout.activity_find_idioma_by_id);
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
@@ -35,38 +33,40 @@ public  class FindByIdAutorActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        this.id = findViewById(R.id.buscar);
-        actionBar.setTitle("Buscar Autor");
+        this.id = findViewById(R.id.buscarIdioma);
+        actionBar.setTitle("Buscar Idioma");
     }
-
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
 
-    Optional<AutorEntity> findById(Long id) {
-        Optional<AutorEntity> autorEntity = Optional.ofNullable(db.autorDao().findByIdAutor(id));
-        return autorEntity;
+    private Optional<IdiomaEntity> findById(Long id) {
+        Optional<IdiomaEntity> idiomaEntity = Optional.ofNullable(db.idiomaDao().findByIdIdioma(id));
+        return idiomaEntity;
     }
 
-    public void consultarAutor(View v) {
+
+    public void consultarIdioma(View view) {
         Long id = Long.parseLong(this.id.getText().toString());
-        Optional<AutorEntity> autorEntity = findById(id);
-        if (autorEntity.isPresent()) {
+        Optional<IdiomaEntity> idiomaEntity = findById(id);
+        if (idiomaEntity.isPresent()) {
             try {
-                AutorEntity autor = autorEntity.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.Autor.CreateAutorActivity");
+                IdiomaEntity idioma = idiomaEntity.get();
+                Class<?> clase = Class.forName("com.example.controlinventario.Idioma.CrudIdiomaActivity");
                 Intent intent = new Intent(this, clase);
                 //autorEntity
-                intent.putExtra("autorEntity", autor);
+                intent.putExtra("idioma", idioma);
                 intent.putExtra("isEditMode", true);
                 startActivity(intent);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(this, "A ocurrido un error vuelva a intentar", Toast.LENGTH_SHORT).show();
             }
             return;
         }
-        Toast.makeText(this, "No existe el autor", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No existe el Idioma", Toast.LENGTH_SHORT).show();
 
     }
+
 }

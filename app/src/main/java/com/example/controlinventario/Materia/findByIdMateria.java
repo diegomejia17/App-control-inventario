@@ -1,4 +1,4 @@
-package com.example.controlinventario.Autor;
+package com.example.controlinventario.Materia;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,62 +11,62 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
+import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.R;
 
 import java.util.Optional;
 
-public  class FindByIdAutorActivity extends AppCompatActivity {
-
-
+public class findByIdMateria extends AppCompatActivity {
 
     private ActionBar actionBar;
     private AppDatabase db;
-    EditText id;
+    private EditText id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_by_id);
-
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
+        setContentView(R.layout.activity_find_by_id_materia);
+        db = AppDatabase.getDatabase(getApplicationContext());
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        this.id = findViewById(R.id.buscar);
-        actionBar.setTitle("Buscar Autor");
-    }
+        this.id = findViewById(R.id.buscarMateria);
+        actionBar.setTitle("Buscar Materia");
 
+    }
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
 
-    Optional<AutorEntity> findById(Long id) {
-        Optional<AutorEntity> autorEntity = Optional.ofNullable(db.autorDao().findByIdAutor(id));
-        return autorEntity;
+    private Optional<MateriaEntity> findById(Long id) {
+        Optional<MateriaEntity> materiaEntity = Optional.ofNullable(db.materiaDao().findByIdMateria(id));
+        return materiaEntity;
     }
-
-    public void consultarAutor(View v) {
+    public void consultarMateria(View view) {
         Long id = Long.parseLong(this.id.getText().toString());
-        Optional<AutorEntity> autorEntity = findById(id);
-        if (autorEntity.isPresent()) {
+        Optional<MateriaEntity> materiaEntity = findById(id);
+        if (materiaEntity.isPresent()) {
             try {
-                AutorEntity autor = autorEntity.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.Autor.CreateAutorActivity");
+                MateriaEntity materia = materiaEntity.get();
+                Class<?> clase = Class.forName("com.example.controlinventario.Materia.CrudMateriaActivity");
                 Intent intent = new Intent(this, clase);
                 //autorEntity
-                intent.putExtra("autorEntity", autor);
+                intent.putExtra("materia", materia);
                 intent.putExtra("isEditMode", true);
                 startActivity(intent);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(this, "A ocurrido un error vuelva a intentar", Toast.LENGTH_SHORT).show();
             }
             return;
         }
         Toast.makeText(this, "No existe el autor", Toast.LENGTH_SHORT).show();
 
     }
+
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.controlinventario.Materia;
+package com.example.controlinventario.CategoriaLibro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,41 +8,41 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.controlinventario.R;
 
-public class MateriaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-
+public class CategoriaLibrosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private final String values[] = {
-            "Materia.CrudMateriaActivity", "Materia.findByIdMateria",
-
+            "CategoriaLibro.CrudCategoriaLibroActivity", "CategoriaLibro.FindByIdCategoriaLibroActivity",
     };
     private final String ViewValues[] = {
-            "Crear","Buscar por ID"
+            "Crear", "Buscar por ID"
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_materia);
+        setContentView(R.layout.activity_categoria_libros);
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, ViewValues);
-        ListView listView = (ListView) findViewById(R.id.listMateria);
+        ListView listView = (ListView) findViewById(R.id.listCategoriaLibros);
         listView.setAdapter(adaptador);
         listView.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
         String nameValue = values[i];
         try {
             Class<?> clase = Class.forName("com.example.controlinventario." + nameValue);
-            Intent intent = new Intent(this,clase);
+            Intent intent = new Intent(this, clase);
             startActivity(intent);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(this, "A ocurrido un error", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -5,10 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "Materia")
-public class MateriaEntity {
+public class MateriaEntity implements Serializable {
 
     /*IDMATERIA            int not null,
    FECHACREACIONMATERIA datetime not null,
@@ -16,6 +17,8 @@ public class MateriaEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "IDMATERIA")
     private Long idMateria;
+    @ColumnInfo(name = "NOMBREMATERIA")
+    private String nombre;
 
     @ColumnInfo(name = "FECHACREACIONMATERIA")
 
@@ -29,7 +32,14 @@ public class MateriaEntity {
     public MateriaEntity() {
     }
 
-    public MateriaEntity(Long idMateria,  Date fechaCreacionMateria,  String descripcionMateria) {
+    public MateriaEntity(Long idMateria, String nombre, Date fechaCreacionMateria, String descripcionMateria) {
+        this.idMateria = idMateria;
+        this.nombre = nombre;
+        this.fechaCreacionMateria = fechaCreacionMateria;
+        this.descripcionMateria = descripcionMateria;
+    }
+
+    public MateriaEntity(Long idMateria, Date fechaCreacionMateria, String descripcionMateria) {
         this.idMateria = idMateria;
         this.fechaCreacionMateria = fechaCreacionMateria;
         this.descripcionMateria = descripcionMateria;
@@ -43,7 +53,7 @@ public class MateriaEntity {
         this.idMateria = idMateria;
     }
 
-    @NonNull
+
     public Date getFechaCreacionMateria() {
         return fechaCreacionMateria;
     }
@@ -52,12 +62,20 @@ public class MateriaEntity {
         this.fechaCreacionMateria = fechaCreacionMateria;
     }
 
-    @NonNull
+
     public String getDescripcionMateria() {
         return descripcionMateria;
     }
 
     public void setDescripcionMateria( String descripcionMateria) {
         this.descripcionMateria = descripcionMateria;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

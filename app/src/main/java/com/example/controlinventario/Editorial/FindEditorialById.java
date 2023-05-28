@@ -1,4 +1,4 @@
-package com.example.controlinventario.Autor;
+package com.example.controlinventario.Editorial;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,23 +11,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
+import com.example.controlinventario.Materia.MateriaEntity;
 import com.example.controlinventario.R;
 
 import java.util.Optional;
 
-public  class FindByIdAutorActivity extends AppCompatActivity {
-
-
+public class FindEditorialById extends AppCompatActivity {
 
     private ActionBar actionBar;
     private AppDatabase db;
-    EditText id;
+    private EditText id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_by_id);
+        setContentView(R.layout.activity_find_editorial_by_id);
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
@@ -35,38 +34,38 @@ public  class FindByIdAutorActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        this.id = findViewById(R.id.buscar);
-        actionBar.setTitle("Buscar Autor");
+        this.id = findViewById(R.id.buscarEditorial);
+        actionBar.setTitle("Buscar Editorial");
     }
-
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
 
-    Optional<AutorEntity> findById(Long id) {
-        Optional<AutorEntity> autorEntity = Optional.ofNullable(db.autorDao().findByIdAutor(id));
-        return autorEntity;
+    private Optional<EditorialEntity> findById(Long id) {
+        Optional<EditorialEntity> editorial = Optional.ofNullable(db.editorialDao().findByIdEditorial(id));
+        return editorial;
     }
-
-    public void consultarAutor(View v) {
+    public void consultarEditorial(View view) {
         Long id = Long.parseLong(this.id.getText().toString());
-        Optional<AutorEntity> autorEntity = findById(id);
-        if (autorEntity.isPresent()) {
+        Optional<EditorialEntity> editorialObj = findById(id);
+        if (editorialObj.isPresent()) {
             try {
-                AutorEntity autor = autorEntity.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.Autor.CreateAutorActivity");
+                EditorialEntity editorial = editorialObj.get();
+                Class<?> clase = Class.forName("com.example.controlinventario.Editorial.CrudEditorial");
                 Intent intent = new Intent(this, clase);
                 //autorEntity
-                intent.putExtra("autorEntity", autor);
+                intent.putExtra("editorial", editorial);
                 intent.putExtra("isEditMode", true);
                 startActivity(intent);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(this, "A ocurrido un error vuelva a intentar", Toast.LENGTH_SHORT).show();
             }
             return;
         }
-        Toast.makeText(this, "No existe el autor", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No existe la editorial", Toast.LENGTH_SHORT).show();
 
     }
+
 }

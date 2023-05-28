@@ -5,8 +5,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.example.controlinventario.CategoriaLibro.CategoriaLibroEntity;
+import com.example.controlinventario.Editorial.EditorialEntity;
+import com.example.controlinventario.Idioma.IdiomaEntity;
 import com.example.controlinventario.Materia.MateriaEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "Libro",
@@ -14,15 +18,30 @@ import java.util.Date;
                 @ForeignKey(
                         entity = MateriaEntity.class,
                         parentColumns = "IDMATERIA",
-                        childColumns = "IDMATERIA",
-                        onDelete = ForeignKey.CASCADE)})
+                        childColumns = "IDMATERIA"),
+                @ForeignKey(
+                        entity = EditorialEntity.class,
+                        parentColumns = "IDEDITORIAL",
+                        childColumns = "IDEDITORIAL"),
+                @ForeignKey(
+                        entity = IdiomaEntity.class,
+                        parentColumns = "IDIDIOMA",
+                        childColumns = "IDIDIOMA"),
+                @ForeignKey(
+                        entity = CategoriaLibroEntity.class,
+                        parentColumns = "IDCATEGORIALIBRO",
+                        childColumns = "IDCATEGORIALIBRO")
+        })
 
-public class LibroEntity {
+public class LibroEntity  implements Serializable {
 
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "IDLIBRO")
     private Long idLibro;
+
+    @ColumnInfo(name = "TITULOLIBRO")
+    private String tituloLibro;
 
     @ColumnInfo(name = "FECHACREACIONLIBRO")
     private Date fechaCreacionLibro;
@@ -45,10 +64,47 @@ public class LibroEntity {
     @ColumnInfo(name = "IDMATERIA")
     private Long idMateria;
 
+    @ColumnInfo(name = "IDEDITORIAL")
+    private Long idEditorial;
+    @ColumnInfo(name = "IDIDIOMA")
+    private long idIdioma;
+
+    @ColumnInfo(name = "IDCATEGORIALIBRO")
+    private Long idCategoriaLibro;
+
     public LibroEntity() {
     }
 
-    public LibroEntity(Long idLibro, Date fechaCreacionLibro, String descripcionLibro, Long isbnLibro, Date fechaPublicacionLibro, Long edicionLibro, Long tomoLibro, Long idMateria) {
+    public LibroEntity(Long idLibro, String tituloLibro, Date fechaCreacionLibro, String descripcionLibro, Long isbnLibro, Date fechaPublicacionLibro, Long edicionLibro, Long tomoLibro, Long idMateria, Long idEditorial, long idIdioma, Long idCategoriaLibro) {
+        this.idLibro = idLibro;
+        this.tituloLibro = tituloLibro;
+        this.fechaCreacionLibro = fechaCreacionLibro;
+        this.descripcionLibro = descripcionLibro;
+        this.isbnLibro = isbnLibro;
+        this.fechaPublicacionLibro = fechaPublicacionLibro;
+        this.edicionLibro = edicionLibro;
+        this.tomoLibro = tomoLibro;
+        this.idMateria = idMateria;
+        this.idEditorial = idEditorial;
+        this.idIdioma = idIdioma;
+        this.idCategoriaLibro = idCategoriaLibro;
+    }
+
+    public LibroEntity(Long idLibro, String tituloLibro, Date fechaCreacionLibro, String descripcionLibro, Long isbnLibro, Date fechaPublicacionLibro, Long edicionLibro, Long tomoLibro, Long idMateria, Long idEditorial, long idIdioma) {
+        this.idLibro = idLibro;
+        this.tituloLibro = tituloLibro;
+        this.fechaCreacionLibro = fechaCreacionLibro;
+        this.descripcionLibro = descripcionLibro;
+        this.isbnLibro = isbnLibro;
+        this.fechaPublicacionLibro = fechaPublicacionLibro;
+        this.edicionLibro = edicionLibro;
+        this.tomoLibro = tomoLibro;
+        this.idMateria = idMateria;
+        this.idEditorial = idEditorial;
+        this.idIdioma = idIdioma;
+    }
+
+    public LibroEntity(Long idLibro, Date fechaCreacionLibro, String descripcionLibro, Long isbnLibro, Date fechaPublicacionLibro, Long edicionLibro, Long tomoLibro, Long idMateria, Long idEditorial, Long idIdioma) {
         this.idLibro = idLibro;
         this.fechaCreacionLibro = fechaCreacionLibro;
         this.descripcionLibro = descripcionLibro;
@@ -57,6 +113,8 @@ public class LibroEntity {
         this.edicionLibro = edicionLibro;
         this.tomoLibro = tomoLibro;
         this.idMateria = idMateria;
+        this.idEditorial = idEditorial;
+        this.idIdioma= idIdioma;
     }
 
     public Long getIdLibro() {
@@ -121,5 +179,37 @@ public class LibroEntity {
 
     public void setIdMateria(Long idMateria) {
         this.idMateria = idMateria;
+    }
+
+    public Long getIdEditorial() {
+        return idEditorial;
+    }
+
+    public void setIdEditorial(Long idEditorial) {
+        this.idEditorial = idEditorial;
+    }
+
+    public long getIdIdioma() {
+        return idIdioma;
+    }
+
+    public void setIdIdioma(long idIdioma) {
+        this.idIdioma = idIdioma;
+    }
+
+    public String getTituloLibro() {
+        return tituloLibro;
+    }
+
+    public void setTituloLibro(String tituloLibro) {
+        this.tituloLibro = tituloLibro;
+    }
+
+    public Long getIdCategoriaLibro() {
+        return idCategoriaLibro;
+    }
+
+    public void setIdCategoriaLibro(Long idCategoriaLibro) {
+        this.idCategoriaLibro = idCategoriaLibro;
     }
 }
