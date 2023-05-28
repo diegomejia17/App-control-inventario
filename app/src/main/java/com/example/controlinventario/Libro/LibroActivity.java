@@ -4,12 +4,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.text.Selection;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CursorAdapter;
@@ -58,7 +61,8 @@ public class LibroActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
-
+        this.btnEliminar = findViewById(R.id.botonEliminarLibro);
+        this.btnModificar = findViewById(R.id.botonModificarLibro);
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fabLibro);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -107,6 +111,7 @@ public class LibroActivity extends AppCompatActivity {
 
 
         if (isEditMode) {
+
             LibroEntity libro = (LibroEntity) intent.getSerializableExtra("libro");
             this.id.setText(libro.getIdLibro().toString());
             this.tomo.setText(libro.getTomoLibro().toString());
@@ -121,10 +126,10 @@ public class LibroActivity extends AppCompatActivity {
             this.searchMateria.setQuery(buscarPorId(libro.getIdMateria(), this.suggestionMateriaList), false);
             this.searchEditorial.setQuery(buscarPorId(libro.getIdEditorial(), this.suggestionEditorialList), false);
 
-            db.autorLibroDao().getLibroConAutores(libro.getIdLibro()).autores.forEach(
+            db.autorDao().getAutoresPorIdLibro(libro.getIdLibro()).forEach(
                     autor -> {
                         Chip chip = new Chip(this);
-                        chip.setText(buscarPorId(autor.getIDAUTOR(), this.suggestionAutorList));
+                        chip.setText(buscarPorId(autor.getIdAutor(), this.suggestionAutorList));
                         chip.setCloseIconVisible(true);
                         chip.setOnCloseIconClickListener(v -> {
                             // Remove the chip from chip group
@@ -133,28 +138,13 @@ public class LibroActivity extends AppCompatActivity {
                         chipGroup.addView(chip);
                     }
             );
+            bloquear();
 
-            this.btnEliminar.setVisibility(View.VISIBLE);
-            this.btnModificar.setVisibility(View.VISIBLE);
-            this.fab.setVisibility(View.GONE);
-
-            this.titulo.setEnabled(false);
-            this.isbn.setEnabled(false);
-            this.tomo.setEnabled(false);
-            this.fechaPublicacion.setEnabled(false);
-            this.fechaCreacion.setEnabled(false);
-            this.descripcion.setEnabled(false);
-
-            this.searchIdioma.setEnabled(false);
-            this.searchCategoriaLibro.setEnabled(false);
-            this.searchMateria.setEnabled(false);
-            this.searchEditorial.setEnabled(false);
-            this.searchAutor.setEnabled(false);
 
             actionBar.setTitle("Información del libro");
-            return;
+        } else {
+            actionBar.setTitle("Crear Materia");
         }
-        actionBar.setTitle("Crear Materia");
 
 
         SimpleCursorAdapter cursorAutorAdapter = new SimpleCursorAdapter(LibroActivity.this, R.layout.suggestion_autor, null, from, toAutor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
@@ -205,6 +195,10 @@ public class LibroActivity extends AppCompatActivity {
                 Chip chip = new Chip(LibroActivity.this);
                 chip.setText(selection);
                 chip.setCloseIconVisible(true);
+                chip.setOnCloseIconClickListener(v -> {
+                    chipGroup.removeView(chip);
+                });
+                suggestionAutorList.remove(selection);
                 chipGroup.addView(chip);
                 return true;
             }
@@ -377,15 +371,15 @@ public class LibroActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             try {
                 saveData();
-            } catch (ParseException e) {
-                notificacion("Error al guardar datos");
+            } catch (Exception e) {
+                notificacion("Error al guardar datos, asegurese que todo este correcto");
                 throw new RuntimeException(e);
             }
         });
 
     }
 
-    private void saveData() throws ParseException {
+    private void saveData() throws Exception {
         String titulo = this.titulo.getText().toString();
         String isbn = this.isbn.getText().toString();
         String tomo = this.tomo.getText().toString();
@@ -410,21 +404,37 @@ public class LibroActivity extends AppCompatActivity {
         }
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        Long idLibro = (this.db.libroDao().getLastId()) ;
+        Long idLibro = (this.db.libroDao().getLastId());
         LibroEntity libro = new LibroEntity();
         libro.setIdLibro((idLibro == null) ? 1 : idLibro + 1);
+        if (isEditMode) libro.setIdLibro(Long.parseLong(this.id.getText().toString()));
         libro.setTituloLibro(titulo);
         libro.setIsbnLibro(Long.parseLong(isbn));
         libro.setTomoLibro(Long.parseLong(tomo));
         libro.setFechaPublicacionLibro(format.parse(fechaPublicacion));
         libro.setDescripcionLibro(descripcion);
         libro.setFechaCreacionLibro(format.parse(fechaCreacion));
+        ArrayList<Long> ids = new ArrayList<>();
+        try {
+            ids.add(this.db.categoriaLibroDao().findByIdCategoriaLibro(recuperarId(categoria)).getId());
+            ids.add(this.db.editorialDao().findByIdEditorial(recuperarId(editorial)).getId());
+            ids.add(this.db.idiomaDao().findByIdIdioma(recuperarId(idioma)).getId());
+            ids.add(this.db.materiaDao().findByIdMateria(recuperarId(materia)).getIdMateria());
 
+        } catch (Exception e) {
+            notificacion("Debe completar los campos correctamente");
+            e.printStackTrace();
+            return;
+        }
 
-        libro.setIdCategoriaLibro(this.db.categoriaLibroDao().findAllCategoriaLibro().get(this.suggestionCategoriaLibroList.indexOf(categoria)).getId());
-        libro.setIdEditorial(this.db.editorialDao().findAll().get(this.suggestionEditorialList.indexOf(editorial)).getId());
-        libro.setIdIdioma(this.db.idiomaDao().findAll().get(this.suggestionIdiomaList.indexOf(idioma)).getId());
-        libro.setIdMateria(this.db.materiaDao().findAll().get(this.suggestionMateriaList.indexOf(materia)).getIdMateria());
+        if (ids.get(0) == null || ids.get(1) == null || ids.get(2) == null || ids.get(3) == null) {
+            notificacion("Debe seleccionar una de las sugerencias");
+            return;
+        }
+        libro.setIdCategoriaLibro(ids.get(0));
+        libro.setIdEditorial(ids.get(1));
+        libro.setIdIdioma(ids.get(2));
+        libro.setIdMateria(ids.get(3));
 
         ArrayList<AutorLibroEntity> autorLibroEntities = new ArrayList<>();
         for (String autor : autores) {
@@ -433,7 +443,19 @@ public class LibroActivity extends AppCompatActivity {
             autorLibroEntities.add(new AutorLibroEntity(idAutor, libro.getIdLibro()));
         }
 
+        this.suggestionAutorList = listaAutores();
+        if (isEditMode) {
+            this.db.autorLibroDao().deleteLibroConAutores(libro.getIdLibro());
+            this.db.libroDao().update(libro);
+            autorLibroEntities.forEach(al -> this.db.autorLibroDao().insert(al));
+            notificacion("Libro actualizado con exito");
+
+            bloquear();
+            return;
+        }
+
         this.db.libroDao().insert(libro);
+        limpiar();
         autorLibroEntities.forEach(al -> this.db.autorLibroDao().insert(al));
         notificacion("Libro guardado con exito");
     }
@@ -552,6 +574,115 @@ public class LibroActivity extends AppCompatActivity {
     public String buscarPorId(Long id, List<String> e) {
 
         return e.stream().filter(cadena -> cadena.startsWith(id.toString() + "-")).findFirst().orElseGet(() -> "No encontrado");
+    }
+
+    public Long recuperarId(String cadena) throws NumberFormatException {
+        return Long.parseLong(cadena.split("-")[0]);
+    }
+
+    private void limpiar() {
+        this.titulo.setText("");
+        this.isbn.setText("");
+        this.tomo.setText("");
+        this.fechaPublicacion.setText("");
+        this.descripcion.setText("");
+        this.fechaCreacion.setText("");
+        this.searchEditorial.setQuery("", false);
+        this.searchIdioma.setQuery("", false);
+        this.searchMateria.setQuery("", false);
+        this.searchCategoriaLibro.setQuery("", false);
+        this.searchAutor.setQuery("", false);
+        this.chipGroup.removeAllViews();
+    }
+
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
+
+    public void eliminar(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Eliminar dato");
+        builder.setMessage("¿Estás seguro de que quieres eliminar este dato?");
+
+// Agregar botón de confirmación
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                db.autorLibroDao().deleteLibroConAutores(Long.parseLong(id.getText().toString()));
+                // Acción de eliminación
+                LibroEntity libro = new LibroEntity();
+                libro.setIdLibro(Long.parseLong(id.getText().toString()));
+                db.libroDao().delete(libro);
+                notificacion("Libro eliminado correctamente");
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+// Agregar botón de cancelar
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Cancelar eliminación
+                dialog.dismiss();
+            }
+        });
+
+// Mostrar el diálogo
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    public void modificar(View view) {
+        this.titulo.setEnabled(true);
+        this.isbn.setEnabled(true);
+        this.tomo.setEnabled(true);
+        this.fechaPublicacion.setEnabled(true);
+        this.descripcion.setEnabled(true);
+        this.fechaCreacion.setEnabled(true);
+        this.searchEditorial.setEnabled(true);
+        this.searchIdioma.setEnabled(true);
+        this.searchMateria.setEnabled(true);
+        this.searchCategoriaLibro.setEnabled(true);
+        this.searchAutor.setEnabled(true);
+        this.chipGroup.setEnabled(true);
+        this.chipGroup.setClickable(true);
+
+        this.btnModificar.setVisibility(View.GONE);
+        this.btnEliminar.setVisibility(View.GONE);
+        this.fab.setVisibility(View.VISIBLE);
+
+        notificacion("Ahora puede editar");
+    }
+
+    void bloquear() {
+        this.btnEliminar.setVisibility(View.VISIBLE);
+        this.btnModificar.setVisibility(View.VISIBLE);
+        this.fab.setVisibility(View.GONE);
+
+        this.titulo.setEnabled(false);
+        this.isbn.setEnabled(false);
+        this.tomo.setEnabled(false);
+        this.fechaPublicacion.setEnabled(false);
+        this.fechaCreacion.setEnabled(false);
+        this.descripcion.setEnabled(false);
+
+        this.searchIdioma.setEnabled(false);
+        this.searchIdioma.setClickable(false);
+        this.searchCategoriaLibro.setEnabled(false);
+        this.searchCategoriaLibro.setClickable(false);
+        this.searchMateria.setEnabled(false);
+        this.searchMateria.setClickable(false);
+        this.searchEditorial.setEnabled(false);
+        this.searchEditorial.setClickable(false);
+        this.searchAutor.setEnabled(false);
+        this.searchAutor.setClickable(false);
+        this.chipGroup.setEnabled(false);
+        this.chipGroup.setClickable(false);
 
     }
 }

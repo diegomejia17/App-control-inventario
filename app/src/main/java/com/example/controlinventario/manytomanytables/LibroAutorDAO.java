@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
+import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.Commons.GenericDAO;
 
 import java.util.List;
@@ -17,6 +18,12 @@ public interface LibroAutorDAO  extends GenericDAO<AutorLibroEntity> {
     @Transaction
     @Query("Select * from Libro where IDLIBRO = :idLibro")
     public LibroConAutores getLibroConAutores(Long idLibro);
+
+    @Transaction
+    //delete by idLibro
+    @Query("DELETE FROM autorlibro  WHERE idLibro = :idLibro")
+    public void deleteLibroConAutores(Long idLibro);
+
 
 
 }

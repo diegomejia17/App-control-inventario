@@ -10,6 +10,7 @@ import com.example.controlinventario.Editorial.EditorialEntity;
 import com.example.controlinventario.Idioma.IdiomaEntity;
 import com.example.controlinventario.Materia.MateriaEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "Libro",
@@ -32,7 +33,7 @@ import java.util.Date;
                         childColumns = "IDCATEGORIALIBRO")
         })
 
-public class LibroEntity {
+public class LibroEntity  implements Serializable {
 
 
     @PrimaryKey(autoGenerate = true)

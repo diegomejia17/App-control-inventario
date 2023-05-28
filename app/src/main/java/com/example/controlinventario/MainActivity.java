@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     String[] values = {
             "EscuelaJA.MenuEscuelaActivity","CatalogoUbicacionJA.MenuCatalogoUbicacionActivity","FacultadJA.MenuFacultadActivity",
-           "Autor.AutorMenuActivity", "Libro.LibroActivity", "Materia.MateriaActivity",
+           "Autor.AutorMenuActivity", "Libro.MenuLibroActivity", "Materia.MateriaActivity",
             "Idioma.IdiomaActivity","Editorial.EditorialActivity","CategoriaLibro.CategoriaLibrosActivity"
     };
     String[] ViewValues = {

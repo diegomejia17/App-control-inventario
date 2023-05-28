@@ -12,6 +12,12 @@
         android:theme="@style/Theme.ControlInventario"
         tools:targetApi="31">
         <activity
+            android:name=".Libro.MenuLibroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Libro.BuscarLibroIdActivity"
+            android:exported="false" />
+        <activity
             android:name=".Idioma.FindIdiomaByIdActivity"
             android:exported="false" />
         <activity
