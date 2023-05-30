@@ -16,4 +16,5 @@ public interface UbicacionDao extends GenericDAO<UbicacionEntity> {
 
     @Query("Select * from catalogo_ubicacion")
     List<UbicacionEntity> findAll();
+
 }

@@ -68,6 +68,6 @@ public class FindByIdCatalogoUbicacionActivity extends AppCompatActivity {
             }
             return;
         }
-        Toast.makeText(this, "No existe el escuela", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No existe el ubicacion", Toast.LENGTH_SHORT).show();
     }
 }

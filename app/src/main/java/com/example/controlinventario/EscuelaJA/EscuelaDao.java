@@ -14,4 +14,6 @@ public interface EscuelaDao extends GenericDAO<EscuelaEntity> {
 
     @Query("Select * from escuela")
     List<EscuelaEntity> findAll();
+    @Query("Select COUNT(*) from catalogo_ubicacion where IDESCUELA = :idEscuela")
+    int existeLlaveForane(String idEscuela);
 }

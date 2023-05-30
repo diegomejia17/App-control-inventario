@@ -129,10 +129,11 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        EscuelaEntity escuelaEntity = new EscuelaEntity(date, nombre, Long.parseLong(id));
+        EscuelaEntity escuelaEntity = new EscuelaEntity(date, nombre, Long.parseLong(idFacultad));
         if (isEditMode) {
-            escuelaEntity.setIdMateria(Long.parseLong(this.id.getText().toString()));
-            db.escuelaDao().update(escuelaEntity);
+            EscuelaEntity escuelaEntity1 = new EscuelaEntity(date, nombre, Long.parseLong(idFacultad));
+            escuelaEntity1.setIdMateria(Long.parseLong(this.id.getText().toString()));
+            db.escuelaDao().update(escuelaEntity1);
             Toast.makeText(getApplicationContext(), "Escuela actualizado", Toast.LENGTH_SHORT).show();
 
             this.btnEliminar.setVisibility(View.VISIBLE);
@@ -179,11 +180,17 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
-                EscuelaEntity escuelaEntity = new EscuelaEntity();
-                escuelaEntity.setIdMateria(Long.parseLong(id.getText().toString()));
-                db.escuelaDao().delete(escuelaEntity);
-                Toast.makeText(getApplicationContext(), "Escuela eliminado", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                if(db.escuelaDao().existeLlaveForane(id.getText().toString()) <= 0){
+                    EscuelaEntity escuelaEntity = new EscuelaEntity();
+                    escuelaEntity.setIdMateria(Long.parseLong(id.getText().toString()));
+                    db.escuelaDao().delete(escuelaEntity);
+                    Toast.makeText(getApplicationContext(), "Escuela eliminado", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(getApplicationContext(), "La escuela no se puede eliminar, contiene llave foranea", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+
                 finish();
 
             }

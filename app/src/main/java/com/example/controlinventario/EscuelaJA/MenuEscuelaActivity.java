@@ -15,7 +15,7 @@ import com.example.controlinventario.R;
 
 public class MenuEscuelaActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String[] ViewValues={"Crear", "Modificar/Buscar", "Todos"};
+    String[] ViewValues={"Crear", "Modificar/Buscar"};
     String[] values = {"EscuelaJA.CreateEscuelaActivity","EscuelaJA.FindByEscuelaActivity",""};
 
 

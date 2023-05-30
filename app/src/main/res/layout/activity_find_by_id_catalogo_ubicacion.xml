@@ -23,7 +23,7 @@
             android:background="@drawable/background_input_field"
             android:drawableStart="@drawable/baseline_search_24"
             android:drawablePadding="@dimen/_5sdp"
-            android:hint="ID Facultad"
+            android:hint="ID Ubicación"
             android:inputType="number"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/colorSecondary"

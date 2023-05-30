@@ -65,7 +65,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
             UbicacionEntity ubicacionEntity = (UbicacionEntity) intent.getSerializableExtra("ubicacionEntity");
             String nombre = ubicacionEntity.getNombre();
             Date fecha = ubicacionEntity.getFechaCreacion();
-           // Long id = ubicacionEntity.setIdUbicacion(Long.parseLong(this.id.getText().toString()));
+           //Long id = ubicacionEntity.setIdUbicacion(Long.parseLong(this.id.getText().toString()));
             Long idEscuela = ubicacionEntity.getIdEscuela();
             this.nombre.setText(nombre);
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -129,7 +129,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        UbicacionEntity ubicacion  = new UbicacionEntity(date, nombre, Long.parseLong(id));
+        UbicacionEntity ubicacion  = new UbicacionEntity(date, nombre, Long.parseLong(idEscuela));
         if (isEditMode) {
             ubicacion.setIdUbicacion(Long.parseLong(this.id.getText().toString()));
             db.ubicacionDao().update(ubicacion);
