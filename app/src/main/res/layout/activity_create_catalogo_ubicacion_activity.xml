@@ -62,7 +62,7 @@ tools:context=".CatalogoUbicacionJA.CreateCatalogoUbicacionActivity">
         android:textSize="@dimen/_14sdp" />
 
     <EditText
-        android:id="@+id/id"
+        android:id="@+id/idUbicacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"

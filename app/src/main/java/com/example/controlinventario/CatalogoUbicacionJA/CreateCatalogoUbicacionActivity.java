@@ -27,7 +27,7 @@ import java.util.Date;
 public class CreateCatalogoUbicacionActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private EditText etPlannedDate, nombre, id,txtidEscuela;
+    private EditText etPlannedDate, nombre, idUbicacion,txtidEscuela;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -52,7 +52,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
         actionBar.setDisplayShowHomeEnabled(true);
         this.nombre = findViewById(R.id.nombre);
         this.txtidEscuela = findViewById(R.id.txtidEscuela);
-        this.id = findViewById(R.id.id);
+        this.idUbicacion = findViewById(R.id.idUbicacion);
         this.btnEliminar = findViewById(R.id.botonEliminar);
         this.btnModificar = findViewById(R.id.botonModificar);
         etPlannedDate = findViewById(R.id.fecha);
@@ -70,7 +70,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
             this.nombre.setText(nombre);
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
             this.etPlannedDate.setText(formatter.format(fecha));
-            this.id.setText(id.toString());
+            this.idUbicacion.setText(idUbicacion.toString());
             this.txtidEscuela.setText(idEscuela.toString());
 
             //activate view for btnEliminar and btnModificar
@@ -120,7 +120,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
     private void saveData() throws ParseException {
         String nombre = this.nombre.getText().toString();
         String idEscuela = this.txtidEscuela.getText().toString();
-        String id = this.id.getText().toString();
+        String id = this.idUbicacion.getText().toString();
         String fecha = this.etPlannedDate.getText().toString();
 
         if (nombre.isEmpty() || fecha.isEmpty() || idEscuela.isEmpty()) {
@@ -130,8 +130,13 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
         UbicacionEntity ubicacion  = new UbicacionEntity(date, nombre, Long.parseLong(idEscuela));
+        Intent intent = getIntent();
+        isEditMode = intent.getBooleanExtra("isEditMode", false);
+
         if (isEditMode) {
-            ubicacion.setIdUbicacion(Long.parseLong(this.id.getText().toString()));
+            UbicacionEntity ubi = (UbicacionEntity) intent.getSerializableExtra("ubicacionEntity");
+            ubicacion.setIdUbicacion(ubi.getIdUbicacion());
+            //ubicacion.setIdUbicacion(Long.parseLong(this.idUbicacion.getText().toString()));
             db.ubicacionDao().update(ubicacion);
             Toast.makeText(getApplicationContext(), "Ubicacion actualizado", Toast.LENGTH_SHORT).show();
 
@@ -164,7 +169,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
         this.nombre.setText("");
         this.etPlannedDate.setText("");
         this.txtidEscuela.setText("");
-        this.id.setText("");
+        this.idUbicacion.setText("");
     }
 
     //eliminar Facultad
@@ -180,7 +185,11 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
                 UbicacionEntity ubicacionEntity = new UbicacionEntity();
-                ubicacionEntity.setIdEscuela(Long.parseLong(id.getText().toString()));
+                Intent intent = getIntent();
+                isEditMode = intent.getBooleanExtra("isEditMode", false);
+                UbicacionEntity ubi = (UbicacionEntity) intent.getSerializableExtra("ubicacionEntity");
+
+                ubicacionEntity.setIdUbicacion(ubi.getIdUbicacion());
                 db.ubicacionDao().delete(ubicacionEntity);
                 Toast.makeText(getApplicationContext(), "Ubicacion eliminado", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
