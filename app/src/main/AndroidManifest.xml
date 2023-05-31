@@ -105,9 +105,6 @@
             android:name=".CatalogoUbicacionJA.CreateCatalogoUbicacionActivity"
             android:exported="false" />
         <activity
-            android:name=".Autor.AllAutorActivity"
-            android:exported="false" />
-        <activity
             android:name=".Autor.FindByIdAutorActivity"
             android:exported="false" />
         <activity

@@ -171,7 +171,7 @@ public class LibroActivity extends AppCompatActivity {
                 if (newText != null) {
 
                     for (String suggestion : suggestionAutorList) {
-                        if (suggestion.contains(newText)) {
+                        if (suggestion.toLowerCase().contains(newText.toLowerCase())) {
                             int index = suggestionAutorList.indexOf(suggestion);
                             cursor.addRow(new Object[]{index, suggestion});
                         }
@@ -218,7 +218,7 @@ public class LibroActivity extends AppCompatActivity {
                 if (newText != null) {
 
                     for (String suggestion : suggestionEditorialList) {
-                        if (suggestion.contains(newText)) {
+                        if (suggestion.toLowerCase().contains(newText.toLowerCase())) {
                             cursor.addRow(new Object[]{suggestionEditorialList.indexOf(suggestion), suggestion});
                         }
                     }
@@ -258,7 +258,7 @@ public class LibroActivity extends AppCompatActivity {
                 if (newText != null) {
 
                     for (String suggestion : suggestionIdiomaList) {
-                        if (suggestion.contains(newText)) {
+                        if (suggestion.toLowerCase().contains(newText.toLowerCase())) {
                             cursor.addRow(new Object[]{suggestionIdiomaList.indexOf(suggestion), suggestion});
                         }
                     }
@@ -298,7 +298,7 @@ public class LibroActivity extends AppCompatActivity {
                 if (newText != null) {
 
                     for (String suggestion : suggestionMateriaList) {
-                        if (suggestion.contains(newText)) {
+                        if (suggestion.toLowerCase().contains(newText.toLowerCase())) {
                             cursor.addRow(new Object[]{suggestionMateriaList.indexOf(suggestion), suggestion});
                         }
                     }
@@ -337,7 +337,7 @@ public class LibroActivity extends AppCompatActivity {
                 if (newText != null) {
 
                     for (String suggestion : suggestionCategoriaLibroList) {
-                        if (suggestion.contains(newText)) {
+                        if (suggestion.toLowerCase().contains(newText.toLowerCase())) {
                             cursor.addRow(new Object[]{suggestionCategoriaLibroList.indexOf(suggestion), suggestion});
                         }
                     }
@@ -607,34 +607,27 @@ public class LibroActivity extends AppCompatActivity {
         builder.setMessage("¿Estás seguro de que quieres eliminar este dato?");
 
 // Agregar botón de confirmación
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton("Sí", (dialog, which) -> {
 
-                db.autorLibroDao().deleteLibroConAutores(Long.parseLong(id.getText().toString()));
-                // Acción de eliminación
-                LibroEntity libro = new LibroEntity();
-                libro.setIdLibro(Long.parseLong(id.getText().toString()));
-                db.libroDao().delete(libro);
-                notificacion("Libro eliminado correctamente");
-                dialog.dismiss();
-                finish();
-            }
+            db.autorLibroDao().deleteLibroConAutores(Long.parseLong(id.getText().toString()));
+            // Acción de eliminación
+            LibroEntity libro = new LibroEntity();
+            libro.setIdLibro(Long.parseLong(id.getText().toString()));
+            db.libroDao().delete(libro);
+            notificacion("Libro eliminado correctamente");
+            dialog.dismiss();
+            finish();
         });
 
 // Agregar botón de cancelar
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Cancelar eliminación
-                dialog.dismiss();
-            }
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Cancelar eliminación
+            dialog.dismiss();
         });
 
 // Mostrar el diálogo
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     public void modificar(View view) {
