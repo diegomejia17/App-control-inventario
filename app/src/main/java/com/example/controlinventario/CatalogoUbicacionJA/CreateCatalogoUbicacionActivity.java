@@ -27,7 +27,7 @@ import java.util.Date;
 public class CreateCatalogoUbicacionActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    private EditText etPlannedDate, nombre, idUbicacion,txtidEscuela;
+    private EditText etPlannedDate, nombre, idUbicacion, txtidEscuela;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -65,7 +65,7 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
             UbicacionEntity ubicacionEntity = (UbicacionEntity) intent.getSerializableExtra("ubicacionEntity");
             String nombre = ubicacionEntity.getNombre();
             Date fecha = ubicacionEntity.getFechaCreacion();
-           //Long id = ubicacionEntity.setIdUbicacion(Long.parseLong(this.id.getText().toString()));
+            //Long id = ubicacionEntity.setIdUbicacion(Long.parseLong(this.id.getText().toString()));
             Long idEscuela = ubicacionEntity.getIdEscuela();
             this.nombre.setText(nombre);
             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -129,29 +129,33 @@ public class CreateCatalogoUbicacionActivity extends AppCompatActivity implement
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        UbicacionEntity ubicacion  = new UbicacionEntity(date, nombre, Long.parseLong(idEscuela));
-        Intent intent = getIntent();
-        isEditMode = intent.getBooleanExtra("isEditMode", false);
+        UbicacionEntity ubicacion = new UbicacionEntity(date, nombre, Long.parseLong(idEscuela));
+        if (db.escuelaDao().cantEscuela(Long.parseLong(idEscuela)) <= 0) {
+            Toast.makeText(getApplicationContext(), "El idEscuela no existe", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = getIntent();
+            isEditMode = intent.getBooleanExtra("isEditMode", false);
 
-        if (isEditMode) {
-            UbicacionEntity ubi = (UbicacionEntity) intent.getSerializableExtra("ubicacionEntity");
-            ubicacion.setIdUbicacion(ubi.getIdUbicacion());
-            //ubicacion.setIdUbicacion(Long.parseLong(this.idUbicacion.getText().toString()));
-            db.ubicacionDao().update(ubicacion);
-            Toast.makeText(getApplicationContext(), "Ubicacion actualizado", Toast.LENGTH_SHORT).show();
+            if (isEditMode) {
+                UbicacionEntity ubi = (UbicacionEntity) intent.getSerializableExtra("ubicacionEntity");
+                ubicacion.setIdUbicacion(ubi.getIdUbicacion());
+                //ubicacion.setIdUbicacion(Long.parseLong(this.idUbicacion.getText().toString()));
+                db.ubicacionDao().update(ubicacion);
+                Toast.makeText(getApplicationContext(), "Ubicacion actualizado", Toast.LENGTH_SHORT).show();
 
-            this.btnEliminar.setVisibility(View.VISIBLE);
-            this.btnModificar.setVisibility(View.VISIBLE);
-            //no edit fields
-            this.nombre.setEnabled(false);
-            this.txtidEscuela.setEnabled(false);
-            this.etPlannedDate.setEnabled(false);
-            this.fab.setVisibility(View.GONE);
+                this.btnEliminar.setVisibility(View.VISIBLE);
+                this.btnModificar.setVisibility(View.VISIBLE);
+                //no edit fields
+                this.nombre.setEnabled(false);
+                this.txtidEscuela.setEnabled(false);
+                this.etPlannedDate.setEnabled(false);
+                this.fab.setVisibility(View.GONE);
 
-            return;
+                return;
+            }
+            db.ubicacionDao().insert(ubicacion);
+            Toast.makeText(getApplicationContext(), "Ubicacion creado", Toast.LENGTH_SHORT).show();
         }
-        db.ubicacionDao().insert(ubicacion);
-        Toast.makeText(getApplicationContext(), "Ubicacion creado", Toast.LENGTH_SHORT).show();
     }
 
     private String twoDigits(int n) {
