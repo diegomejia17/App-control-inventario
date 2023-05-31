@@ -24,6 +24,10 @@ public interface LibroAutorDAO  extends GenericDAO<AutorLibroEntity> {
     @Query("DELETE FROM autorlibro  WHERE idLibro = :idLibro")
     public void deleteLibroConAutores(Long idLibro);
 
+    //count by idLibro
+    @Query("SELECT COUNT(*) FROM autorlibro a WHERE a.IDAUTOR  = :idLibro")
+    public int countLibroConAutores(Long idLibro);
+
 
 
 }
