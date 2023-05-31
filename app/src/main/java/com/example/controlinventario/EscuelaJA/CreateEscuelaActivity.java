@@ -88,7 +88,6 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
             actionBar.setTitle("Crear Escuela");
 
         }
-
         fab.setOnClickListener(view -> {
             try {
                 saveData();
@@ -97,6 +96,8 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
                 throw new RuntimeException(e);
             }
         });
+
+
     }
 
     private void showDatePickerDialog() {
@@ -133,8 +134,15 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
         if (isEditMode) {
             EscuelaEntity escuelaEntity1 = new EscuelaEntity(date, nombre, Long.parseLong(idFacultad));
             escuelaEntity1.setIdMateria(Long.parseLong(this.id.getText().toString()));
-            db.escuelaDao().update(escuelaEntity1);
-            Toast.makeText(getApplicationContext(), "Escuela actualizado", Toast.LENGTH_SHORT).show();
+            if (db.facultadDao().cantFacultad(Long.parseLong(idFacultad)) <= 0) {
+
+                Toast.makeText(getApplicationContext(), "Id facultad no existe", Toast.LENGTH_SHORT).show();
+
+            } else {
+                db.escuelaDao().update(escuelaEntity1);
+                Toast.makeText(getApplicationContext(), "Escuela actualizado", Toast.LENGTH_SHORT).show();
+
+            }
 
             this.btnEliminar.setVisibility(View.VISIBLE);
             this.btnModificar.setVisibility(View.VISIBLE);
@@ -146,8 +154,13 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
 
             return;
         }
-        db.escuelaDao().insert(escuelaEntity);
-        Toast.makeText(getApplicationContext(), "Escuela creado", Toast.LENGTH_SHORT).show();
+        if (db.facultadDao().cantFacultad(Long.parseLong(idFacultad)) <= 0) {
+
+            Toast.makeText(getApplicationContext(), "Id facultad no existe", Toast.LENGTH_SHORT).show();
+        } else {
+            db.escuelaDao().insert(escuelaEntity);
+            Toast.makeText(getApplicationContext(), "Escuela creado", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String twoDigits(int n) {
@@ -180,13 +193,13 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
-                if(db.escuelaDao().existeLlaveForane(id.getText().toString()) <= 0){
+                if (db.escuelaDao().existeLlaveForane(id.getText().toString()) <= 0) {
                     EscuelaEntity escuelaEntity = new EscuelaEntity();
                     escuelaEntity.setIdMateria(Long.parseLong(id.getText().toString()));
                     db.escuelaDao().delete(escuelaEntity);
                     Toast.makeText(getApplicationContext(), "Escuela eliminado", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                }else{
+                } else {
                     Toast.makeText(getApplicationContext(), "La escuela no se puede eliminar, contiene llave foranea", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }

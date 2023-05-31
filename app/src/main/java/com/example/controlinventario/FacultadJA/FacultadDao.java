@@ -12,6 +12,8 @@ import java.util.List;
 public interface FacultadDao extends GenericDAO<FacultadEntity> {
     @Query("Select * from Facultad where IDFACULTAD = :idFacultad")
     FacultadEntity findByIdFacultad(Long idFacultad);
+    @Query("Select COUNT(*) from Facultad where IDFACULTAD = :idFacultad")
+    int cantFacultad(Long idFacultad);
 
     @Query("Select * from Facultad")
     List<FacultadEntity> findAll();
