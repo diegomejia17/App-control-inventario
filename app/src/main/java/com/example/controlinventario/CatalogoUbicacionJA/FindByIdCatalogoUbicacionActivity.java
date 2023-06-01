@@ -51,23 +51,29 @@ public class FindByIdCatalogoUbicacionActivity extends AppCompatActivity {
     }
 
     public void consultar(View v) {
-        Long id = Long.parseLong(this.id.getText().toString());
-        Optional<UbicacionEntity> ubicacionEntity = findById(id);
 
-        if (ubicacionEntity.isPresent()) {
-            try {
-                UbicacionEntity ubicacion = ubicacionEntity.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.CatalogoUbicacionJA.CreateCatalogoUbicacionActivity");
-                Intent intent = new Intent(this, clase);
-                //autorEntity
-                intent.putExtra("ubicacionEntity", ubicacion);
-                intent.putExtra("isEditMode", true);
-                startActivity(intent);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        if(this.id.getText().toString().equals("")){
+            Toast.makeText(this, "Ingrese el id", Toast.LENGTH_SHORT).show();
+        }else{
+            Long id = Long.parseLong(this.id.getText().toString());
+            Optional<UbicacionEntity> ubicacionEntity = findById(id);
+
+            if (ubicacionEntity.isPresent()) {
+                try {
+                    UbicacionEntity ubicacion = ubicacionEntity.get();
+                    Class<?> clase = Class.forName("com.example.controlinventario.CatalogoUbicacionJA.CreateCatalogoUbicacionActivity");
+                    Intent intent = new Intent(this, clase);
+                    //autorEntity
+                    intent.putExtra("ubicacionEntity", ubicacion);
+                    intent.putExtra("isEditMode", true);
+                    startActivity(intent);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                return;
             }
-            return;
+            Toast.makeText(this, "No existe el ubicacion", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "No existe el ubicacion", Toast.LENGTH_SHORT).show();
+
     }
 }

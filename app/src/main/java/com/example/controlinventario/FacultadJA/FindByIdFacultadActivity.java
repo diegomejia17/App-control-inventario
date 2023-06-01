@@ -51,25 +51,27 @@ public class FindByIdFacultadActivity extends AppCompatActivity {
 
     public void consultarFacultad(View v) {
 
+        if (this.id.getText().toString().equals("")) {
+            Toast.makeText(this, "Ingrese el id", Toast.LENGTH_SHORT).show();
+        } else {
+            Long id = Long.parseLong(this.id.getText().toString());
+            Optional<FacultadEntity> facultadEntity = findById(id);
 
-        Long id = Long.parseLong(this.id.getText().toString());
-        Optional<FacultadEntity> facultadEntity = findById(id);
-
-        if (facultadEntity.isPresent()) {
-            try {
-                FacultadEntity facultad = facultadEntity.get();
-                Class<?> clase = Class.forName("com.example.controlinventario.FacultadJA.CreateFacultadActivity");
-                Intent intent = new Intent(this, clase);
-                //autorEntity
-                intent.putExtra("facultadEntity", facultad);
-                intent.putExtra("isEditMode", true);
-                startActivity(intent);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            if (facultadEntity.isPresent()) {
+                try {
+                    FacultadEntity facultad = facultadEntity.get();
+                    Class<?> clase = Class.forName("com.example.controlinventario.FacultadJA.CreateFacultadActivity");
+                    Intent intent = new Intent(this, clase);
+                    //autorEntity
+                    intent.putExtra("facultadEntity", facultad);
+                    intent.putExtra("isEditMode", true);
+                    startActivity(intent);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                return;
             }
-            return;
+            Toast.makeText(this, "No existe el facultad", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "No existe el facultad", Toast.LENGTH_SHORT).show();
-
     }
 }
