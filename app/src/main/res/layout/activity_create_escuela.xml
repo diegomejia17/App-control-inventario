@@ -16,7 +16,7 @@
 
             <!--         editText for name input-->
             <EditText
-                android:id="@+id/nombre_secretaria"
+                android:id="@+id/nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
