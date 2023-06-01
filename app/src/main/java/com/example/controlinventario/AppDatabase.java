@@ -1,9 +1,7 @@
 package com.example.controlinventario;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -29,8 +27,14 @@ import com.example.controlinventario.Materia.MateriaDao;
 import com.example.controlinventario.Materia.MateriaEntity;
 import com.example.controlinventario.manytomanytables.AutorLibroEntity;
 import com.example.controlinventario.manytomanytables.LibroAutorDAO;
+import com.example.controlinventario.Docente.DocenteDao;
+import com.example.controlinventario.Docente.DocenteEntity;
+import com.example.controlinventario.Secretaria.SecretariaDao;
+import com.example.controlinventario.Secretaria.SecretariaEntity;
+import com.example.controlinventario.Estudiante.EstudianteDao;
+import com.example.controlinventario.Estudiante.EstudianteEntity;
 
-@Database(entities = {EditorialEntity.class,AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class, EscuelaEntity.class, IdiomaEntity.class, CategoriaLibroEntity.class, AutorLibroEntity.class}, version = 1)
+@Database(entities = {EditorialEntity.class,AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class, EscuelaEntity.class, IdiomaEntity.class, CategoriaLibroEntity.class, AutorLibroEntity.class, SecretariaEntity.class, DocenteEntity.class, EstudianteEntity.class}, version = 1)
 @TypeConverters({DateConverter.class})
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -46,6 +50,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract EscuelaDao escuelaDao();
     public abstract IdiomaDao idiomaDao();
+
+    public abstract SecretariaDao secretariaDao();
+
+    public abstract DocenteDao docenteDao();
+
+    public abstract EstudianteDao estudianteDao();
 
     public static AppDatabase INSTANCE;
 

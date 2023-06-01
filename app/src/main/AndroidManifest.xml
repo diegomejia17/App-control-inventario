@@ -122,6 +122,42 @@
         <activity
             android:name=".Autor.AutorMenuActivity"
             android:exported="false" />
+        <activity
+            android:name=".Secretaria.UpdateSecretariaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Secretaria.FindByIdSecretariaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Secretaria.DeleteSecretariaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Secretaria.CreateSecretariaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Docente.UpdateDocenteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Docente.FindByIdDocenteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Docente.DeleteDocenteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Docente.CreateDocenteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Estudiante.UpdateEstudianteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Estudiante.FindByIdEstudianteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Estudiante.DeleteEstudianteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Estudiante.CreateEstudianteActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

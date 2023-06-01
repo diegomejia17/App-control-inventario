@@ -1,7 +1,9 @@
-package com.example.controlinventario.Autor;
+package com.example.controlinventario.Secretaria;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.example.controlinventario.AppDatabase;
+
 import com.example.controlinventario.Commons.DatePickerFragment;
 import com.example.controlinventario.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,10 +23,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-public class CreateAutorActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private EditText etPlannedDate, nombre, apellido, id;
+public class CreateSecretariaActivity extends AppCompatActivity implements View.OnClickListener {
+    private EditText etPlannedDate, nombre, id;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -35,21 +37,16 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_autor);
-
+        setContentView(R.layout.activity_create_secretaria);
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
-
-
         db = Room.databaseBuilder(getApplicationContext(),
-              AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
+                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-
         this.nombre = findViewById(R.id.nombre_secretaria);
-        this.apellido = findViewById(R.id.apellido);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
         this.btnModificar = findViewById(R.id.botonModificar);
@@ -60,15 +57,13 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         isEditMode = intent.getBooleanExtra("isEditMode", false);
 
         if (isEditMode) {
-            AutorEntity autorEntity = (AutorEntity) intent.getSerializableExtra("autorEntity");
-            String nombre = autorEntity.getNombre();
-            String apellido = autorEntity.getApellido();
-            Date fecha = autorEntity.getFechaCreacion();
-            Long id = autorEntity.getIdAutor();
+            SecretariaEntity secretariaEntity = (SecretariaEntity) intent.getSerializableExtra("secretariaEntity");
+            String nombre = secretariaEntity.getNombre();
+            Date fecha = secretariaEntity.getFechaCreacion();
+            Long id = secretariaEntity.getIdSecretaria();
 
             this.nombre.setText(nombre);
-            this.apellido.setText(apellido);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
             this.etPlannedDate.setText(formatter.format(fecha));
             this.id.setText(id.toString());
 
@@ -78,13 +73,13 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
             //no edit fields
             this.nombre.setEnabled(false);
-            this.apellido.setEnabled(false);
+
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
-            actionBar.setTitle("Información del Autor");
+            actionBar.setTitle("Información del Secretaria");
         } else {
-            actionBar.setTitle("Crear Autor");
+            actionBar.setTitle("Crear Secretaria");
 
         }
 
@@ -118,34 +113,32 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
     private void saveData() throws ParseException {
         String nombre = this.nombre.getText().toString();
-        String apellido = this.apellido.getText().toString();
+
         String fecha = this.etPlannedDate.getText().toString();
 
-        if (nombre.isEmpty() || apellido.isEmpty() || fecha.isEmpty()) {
+        if (nombre.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        AutorEntity autor = new AutorEntity(date, nombre, apellido);
+        SecretariaEntity secretariaEntity = new SecretariaEntity(date, nombre);
         if (isEditMode) {
-            autor.setIdAutor(Long.parseLong(this.id.getText().toString()));
-            db.autorDao().update(autor);
-            Toast.makeText(getApplicationContext(), "Autor actualizado", Toast.LENGTH_SHORT).show();
+            secretariaEntity.setIdSecretaria(Long.parseLong(this.id.getText().toString()));
+            db.secretariaDao().update(secretariaEntity);
+            Toast.makeText(getApplicationContext(), "Secretaria actualizado", Toast.LENGTH_SHORT).show();
 
             this.btnEliminar.setVisibility(View.VISIBLE);
             this.btnModificar.setVisibility(View.VISIBLE);
             //no edit fields
             this.nombre.setEnabled(false);
-            this.apellido.setEnabled(false);
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
             return;
         }
-        db.autorDao().insert(autor);
-        limpiar();
-        Toast.makeText(getApplicationContext(), "Autor creado", Toast.LENGTH_SHORT).show();
+        db.secretariaDao().insert(secretariaEntity);
+        Toast.makeText(getApplicationContext(), "Secretaria creado", Toast.LENGTH_SHORT).show();
     }
 
     private String twoDigits(int n) {
@@ -161,12 +154,11 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
     //limpiar campos
     public void limpiar() {
         this.nombre.setText("");
-        this.apellido.setText("");
         this.etPlannedDate.setText("");
         this.id.setText("");
     }
 
-    //eliminar autor
+    //eliminar Secretaria
     public void eliminar(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -178,10 +170,10 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
-                AutorEntity autorEntity = new AutorEntity();
-                autorEntity.setIdAutor(Long.parseLong(id.getText().toString()));
-                db.autorDao().delete(autorEntity);
-                Toast.makeText(getApplicationContext(), "Autor eliminado", Toast.LENGTH_SHORT).show();
+                SecretariaEntity secretariaEntity = new SecretariaEntity();
+                secretariaEntity.setIdSecretaria(Long.parseLong(id.getText().toString()));
+                db.secretariaDao().delete(secretariaEntity);
+                Toast.makeText(getApplicationContext(), "Secretaria eliminado", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 finish();
 
@@ -203,10 +195,9 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    //modificar autor
+    //modificar Secretaria
     public void modificar(View view) {
         this.nombre.setEnabled(true);
-        this.apellido.setEnabled(true);
         this.etPlannedDate.setEnabled(true);
         this.fab.setVisibility(View.VISIBLE);
         this.btnEliminar.setVisibility(View.GONE);

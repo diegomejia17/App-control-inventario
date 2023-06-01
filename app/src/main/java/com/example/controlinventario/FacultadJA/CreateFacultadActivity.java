@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
-import com.example.controlinventario.Autor.AutorEntity;
 import com.example.controlinventario.Commons.DatePickerFragment;
 import com.example.controlinventario.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,7 +45,7 @@ public class CreateFacultadActivity extends AppCompatActivity implements View.On
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        this.nombre = findViewById(R.id.nombre);
+        this.nombre = findViewById(R.id.nombre_secretaria);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
         this.btnModificar = findViewById(R.id.botonModificar);

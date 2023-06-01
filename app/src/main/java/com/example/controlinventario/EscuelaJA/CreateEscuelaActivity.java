@@ -9,7 +9,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.controlinventario.AppDatabase;
 import com.example.controlinventario.Commons.DatePickerFragment;
-import com.example.controlinventario.FacultadJA.FacultadEntity;
 import com.example.controlinventario.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -50,7 +48,7 @@ public class CreateEscuelaActivity  extends AppCompatActivity implements View.On
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        this.nombre = findViewById(R.id.nombre);
+        this.nombre = findViewById(R.id.nombre_secretaria);
         this.txtidFacultad = findViewById(R.id.txtidFacultad);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
