@@ -69,6 +69,15 @@
             android:name=".Equipo.FindByIdEquipoActivity"
             android:exported="false" />
         <activity
+            android:name=".Descargo.FindByIdDecargoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Descargo.CreateDescargoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Descargo.DescargoMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
