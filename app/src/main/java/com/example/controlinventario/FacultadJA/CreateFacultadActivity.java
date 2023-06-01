@@ -45,7 +45,7 @@ public class CreateFacultadActivity extends AppCompatActivity implements View.On
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        this.nombre = findViewById(R.id.nombre_secretaria);
+        this.nombre = findViewById(R.id.nombre);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
         this.btnModificar = findViewById(R.id.botonModificar);

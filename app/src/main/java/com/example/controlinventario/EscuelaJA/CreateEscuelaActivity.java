@@ -48,7 +48,7 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        this.nombre = findViewById(R.id.nombre_secretaria);
+        this.nombre = findViewById(R.id.nombre);
         this.txtidFacultad = findViewById(R.id.txtidFacultad);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);

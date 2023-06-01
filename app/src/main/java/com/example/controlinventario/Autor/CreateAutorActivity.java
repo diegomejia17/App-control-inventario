@@ -48,7 +48,7 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        this.nombre = findViewById(R.id.nombre_secretaria);
+        this.nombre = findViewById(R.id.nombre);
         this.apellido = findViewById(R.id.apellido);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
