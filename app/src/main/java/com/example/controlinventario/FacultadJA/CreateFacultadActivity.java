@@ -169,11 +169,16 @@ public class CreateFacultadActivity extends AppCompatActivity implements View.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
+                if(db.facultadDao().existeLlaveForane(id.getText().toString()) <= 0){
                 FacultadEntity facultadEntity = new FacultadEntity();
                 facultadEntity.setIdFacultad(Long.parseLong(id.getText().toString()));
                 db.facultadDao().delete(facultadEntity);
                 Toast.makeText(getApplicationContext(), "Facultad eliminado", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                }else{
+                    Toast.makeText(getApplicationContext(), "La Facultad no se puede eliminar, contiene llave foranea", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
                 finish();
 
             }

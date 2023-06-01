@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MenuCatalogoUbicacionActivity extends ListActivity {
-    String[] menu={"Ingresar Catalogo", "Eliminar Catalogo", "Consultar Catalogo", "Actualizar Catalogo"};
-    String[] activities = {"CatalogoUbicacionJA.CreateCatalogoUbicacionActivity","CatalogoUbicacionJA.DeleteCatalogoUbicacionActivity","CatalogoUbicacionJA.FindByIdCatalogoUbicacionActivity","CatalogoUbicacionJA.UpdateCatalogoUbicacionActivity"};
+    public class MenuCatalogoUbicacionActivity extends ListActivity {
+    String[] menu={"Ingresar Catalogo", "Modificar/buscar"};
+    String[] activities = {"CatalogoUbicacionJA.CreateCatalogoUbicacionActivity","CatalogoUbicacionJA.FindByIdCatalogoUbicacionActivity"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -13,16 +13,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     String[] values = {
-            "EscuelaJA.MenuEscuelaActivity","CatalogoUbicacionJA.MenuCatalogoUbicacionActivity","FacultadJA.MenuFacultadActivity",
-           "Autor.AutorMenuActivity", "Libro.MenuLibroActivity", "Materia.MateriaActivity",
-            "Idioma.IdiomaActivity","Editorial.EditorialActivity","CategoriaLibro.CategoriaLibrosActivity","Secretaria.MenuSecretariaActivity",
-            "Docente.MenuDocenteActivity","Estudiante.MenuEstudianteActivity"
+            "EscuelaJA.MenuEscuelaActivity",
+            "CatalogoUbicacionJA.MenuCatalogoUbicacionActivity",
+            "FacultadJA.MenuFacultadActivity",
+            "Autor.AutorMenuActivity",
+            "Libro.MenuLibroActivity",
+            "Materia.MateriaActivity",
+            "Idioma.IdiomaActivity",
+            "Editorial.EditorialActivity",
+            "CategoriaLibro.CategoriaLibrosActivity",
+            "Secretaria.MenuSecretariaActivity",
+            "Docente.MenuDocenteActivity",
+            "Estudiante.MenuEstudianteActivity",
+            "Marca.MarcaMenuActivity"
     };
     String[] ViewValues = {
-            "Escuela","Ubicación","Facultad",
-            "Autor", "Libro", "Materia",
-            "Idioma","Editorial","Categoria",
-            "Secretaria","Docente","Estudiante"
+            "Escuela",
+            "Ubicación",
+            "Facultad",
+            "Autor",
+            "Libro",
+            "Materia",
+            "Idioma",
+            "Editorial",
+            "Categoria",
+            "Secretaria",
+            "Docente",
+            "Estudiante",
+            "Marca"
     };
 
     @Override
@@ -30,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        //AppDatabase.getDatabase(getApplicationContext());
+   // AppDatabase.getDatabase(getApplicationContext());
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, ViewValues);
         ListView listView = (ListView) findViewById(R.id.listV);

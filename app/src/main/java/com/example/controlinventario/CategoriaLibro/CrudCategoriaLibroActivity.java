@@ -164,33 +164,31 @@ public class CrudCategoriaLibroActivity extends AppCompatActivity {
         builder.setMessage("¿Estás seguro de que quieres eliminar este dato?");
 
 // Agregar botón de confirmación
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Acción de eliminación
-                CategoriaLibroEntity categoriaLibro = new CategoriaLibroEntity();
-                categoriaLibro.setId(Long.parseLong(id.getText().toString()));
-                db.categoriaLibroDao().delete(categoriaLibro);
-                Toast.makeText(getApplicationContext(), "Categoria eliminada", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                finish();
+        builder.setPositiveButton("Sí", (dialog, which) -> {
 
+            int numero = db.libroDao().countLibrosPorCategoria(Long.parseLong(id.getText().toString()));
+            if (numero > 0) {
+                Toast.makeText(getApplicationContext(), "No se puede eliminar la categoria, tiene libros asociados.", Toast.LENGTH_SHORT).show();
+                return;
             }
+            // Acción de eliminación
+            CategoriaLibroEntity categoriaLibro = new CategoriaLibroEntity();
+            categoriaLibro.setId(Long.parseLong(id.getText().toString()));
+            db.categoriaLibroDao().delete(categoriaLibro);
+            Toast.makeText(getApplicationContext(), "Categoria eliminada", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            finish();
+
         });
-
 // Agregar botón de cancelar
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Cancelar eliminación
-                dialog.dismiss();
-            }
+        builder.setNegativeButton("No", (dialog, which) -> {
+            // Cancelar eliminación
+            dialog.dismiss();
         });
 
 // Mostrar el diálogo
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     public void modificar(View view) {

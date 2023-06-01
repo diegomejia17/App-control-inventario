@@ -49,6 +49,9 @@ public class FindByEscuelaActivity extends AppCompatActivity {
     }
 
     public void consultar(View v) {
+        if(this.id.getText().toString().equals("")){
+            Toast.makeText(this, "Ingrese el id", Toast.LENGTH_SHORT).show();
+        }else{
         Long id = Long.parseLong(this.id.getText().toString());
         Optional<EscuelaEntity> escuelaEntity = findById(id);
 
@@ -67,5 +70,6 @@ public class FindByEscuelaActivity extends AppCompatActivity {
             return;
         }
         Toast.makeText(this, "No existe el escuela", Toast.LENGTH_SHORT).show();
-    }
+        }
+        }
 }

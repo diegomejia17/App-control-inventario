@@ -11,7 +11,10 @@ import java.util.List;
 public interface EscuelaDao extends GenericDAO<EscuelaEntity> {
     @Query("Select * from escuela where IDESCUELA = :idEscuela")
     EscuelaEntity findByIdEscuela(Long idEscuela);
-
+    @Query("Select COUNT(*) from escuela where IDESCUELA = :idEscuela")
+    int cantEscuela(Long idEscuela);
     @Query("Select * from escuela")
     List<EscuelaEntity> findAll();
+    @Query("Select COUNT(*) from catalogo_ubicacion where IDESCUELA = :idEscuela")
+    int existeLlaveForane(String idEscuela);
 }

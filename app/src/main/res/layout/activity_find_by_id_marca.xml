@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".CatalogoUbicacionJA.FindByIdCatalogoUbicacionActivity">
+    tools:context=".Marca.FindByIdMarcaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,10 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/background_input_field"
             android:drawableStart="@drawable/baseline_search_24"
             android:drawablePadding="@dimen/_5sdp"
-            android:hint="ID Ubicación"
+            android:background="@drawable/background_input_field"
+            android:hint="ID Marca"
             android:inputType="number"
             android:padding="@dimen/_10sdp"
             android:textColor="@color/colorSecondary"
@@ -34,7 +34,7 @@
             android:id="@+id/botonConsultar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="consultar"
+            android:onClick="consultarMarca"
             android:text="Buscar" />
 
     </LinearLayout>

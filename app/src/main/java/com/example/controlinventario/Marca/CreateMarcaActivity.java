@@ -1,10 +1,5 @@
-package com.example.controlinventario.EscuelaJA;
+package com.example.controlinventario.Marca;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.example.controlinventario.AppDatabase;
 import com.example.controlinventario.Commons.DatePickerFragment;
@@ -23,9 +22,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CreateEscuelaActivity extends AppCompatActivity implements View.OnClickListener {
+public class CreateMarcaActivity  extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText etPlannedDate, nombre, id, txtidFacultad;
+    private EditText etPlannedDate, nombre, descripcion, id;
     private FloatingActionButton fab;
     private Boolean isEditMode;
     private ActionBar actionBar;
@@ -35,21 +34,24 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
     AppDatabase db;
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_escuela);
+        setContentView(R.layout.activity_create_marca);
+
         actionBar = getSupportActionBar();
         fab = findViewById(R.id.fab);
 
+
+
         db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
+            AppDatabase.class, "dbControlInventario").allowMainThreadQueries().build();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        this.nombre = findViewById(R.id.nombre_secretaria);
-        this.txtidFacultad = findViewById(R.id.txtidFacultad);
+
+        this.nombre = findViewById(R.id.nombre);
+        this.descripcion = findViewById(R.id.descripcion);
         this.id = findViewById(R.id.id);
         this.btnEliminar = findViewById(R.id.botonEliminar);
         this.btnModificar = findViewById(R.id.botonModificar);
@@ -60,16 +62,17 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
         isEditMode = intent.getBooleanExtra("isEditMode", false);
 
         if (isEditMode) {
-            EscuelaEntity escuelaEntity = (EscuelaEntity) intent.getSerializableExtra("escuelaEntity");
-            String nombre = escuelaEntity.getNombre();
-            Date fecha = escuelaEntity.getFechaCreacion();
-            Long id = escuelaEntity.getIdMateria();
-            Long idFacultad = escuelaEntity.getIdFacultad();
+            MarcaEntity marcaEntity = (MarcaEntity) intent.getSerializableExtra("marcaEntity");
+            String nombre = marcaEntity.getNombre();
+            String descripcion = marcaEntity.getDescripcion();
+            Date fecha = marcaEntity.getFechaCreacion();
+            Long id = marcaEntity.getIdMarca();
+
             this.nombre.setText(nombre);
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            this.descripcion.setText(descripcion);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             this.etPlannedDate.setText(formatter.format(fecha));
             this.id.setText(id.toString());
-            this.txtidFacultad.setText(idFacultad.toString());
 
             //activate view for btnEliminar and btnModificar
             this.btnEliminar.setVisibility(View.VISIBLE);
@@ -77,15 +80,16 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
 
             //no edit fields
             this.nombre.setEnabled(false);
-            this.txtidFacultad.setEnabled(false);
+            this.descripcion.setEnabled(false);
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
-            actionBar.setTitle("Información del Escuela");
+            actionBar.setTitle("Información de la Marca");
         } else {
-            actionBar.setTitle("Crear Escuela");
+            actionBar.setTitle("Crear Marca");
 
         }
+
         fab.setOnClickListener(view -> {
             try {
                 saveData();
@@ -94,8 +98,6 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
                 throw new RuntimeException(e);
             }
         });
-
-
     }
 
     private void showDatePickerDialog() {
@@ -118,47 +120,38 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
 
     private void saveData() throws ParseException {
         String nombre = this.nombre.getText().toString();
-        String idFacultad = this.txtidFacultad.getText().toString();
-        String id = this.id.getText().toString();
+        String descripcion = this.descripcion.getText().toString();
         String fecha = this.etPlannedDate.getText().toString();
 
-        if (nombre.isEmpty() || fecha.isEmpty() || idFacultad.isEmpty()) {
+        if (nombre.isEmpty() || descripcion.isEmpty() || fecha.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Por favor llene todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("dd/mm/yyyy");
         Date date = format.parse(fecha);
-        EscuelaEntity escuelaEntity = new EscuelaEntity(date, nombre, Long.parseLong(idFacultad));
+        MarcaEntity marca = new MarcaEntity(
+            nombre,
+            date,
+            descripcion
+        );
         if (isEditMode) {
-            EscuelaEntity escuelaEntity1 = new EscuelaEntity(date, nombre, Long.parseLong(idFacultad));
-            escuelaEntity1.setIdMateria(Long.parseLong(this.id.getText().toString()));
-            if (db.facultadDao().cantFacultad(Long.parseLong(idFacultad)) <= 0) {
-
-                Toast.makeText(getApplicationContext(), "Id facultad no existe", Toast.LENGTH_SHORT).show();
-
-            } else {
-                db.escuelaDao().update(escuelaEntity1);
-                Toast.makeText(getApplicationContext(), "Escuela actualizado", Toast.LENGTH_SHORT).show();
-
-            }
+            marca.setIdMarca(Long.parseLong(this.id.getText().toString()));
+            db.marcaDao().update(marca);
+            Toast.makeText(getApplicationContext(), "Marca actualizada", Toast.LENGTH_SHORT).show();
 
             this.btnEliminar.setVisibility(View.VISIBLE);
             this.btnModificar.setVisibility(View.VISIBLE);
             //no edit fields
             this.nombre.setEnabled(false);
-            this.txtidFacultad.setEnabled(false);
+            this.descripcion.setEnabled(false);
             this.etPlannedDate.setEnabled(false);
             this.fab.setVisibility(View.GONE);
 
             return;
         }
-        if (db.facultadDao().cantFacultad(Long.parseLong(idFacultad)) <= 0) {
-
-            Toast.makeText(getApplicationContext(), "Id facultad no existe", Toast.LENGTH_SHORT).show();
-        } else {
-            db.escuelaDao().insert(escuelaEntity);
-            Toast.makeText(getApplicationContext(), "Escuela creado", Toast.LENGTH_SHORT).show();
-        }
+        db.marcaDao().insert(marca);
+        limpiar();
+        Toast.makeText(getApplicationContext(), "Marca creada", Toast.LENGTH_SHORT).show();
     }
 
     private String twoDigits(int n) {
@@ -174,12 +167,12 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
     //limpiar campos
     public void limpiar() {
         this.nombre.setText("");
+        this.descripcion.setText("");
         this.etPlannedDate.setText("");
-        this.txtidFacultad.setText("");
         this.id.setText("");
     }
 
-    //eliminar Facultad
+    //eliminar autor
     public void eliminar(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -191,17 +184,11 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Acción de eliminación
-                if (db.escuelaDao().existeLlaveForane(id.getText().toString()) <= 0) {
-                    EscuelaEntity escuelaEntity = new EscuelaEntity();
-                    escuelaEntity.setIdMateria(Long.parseLong(id.getText().toString()));
-                    db.escuelaDao().delete(escuelaEntity);
-                    Toast.makeText(getApplicationContext(), "Escuela eliminado", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                } else {
-                    Toast.makeText(getApplicationContext(), "La escuela no se puede eliminar, contiene llave foranea", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                }
-
+                MarcaEntity marcaEntity = new MarcaEntity();
+                marcaEntity.setIdMarca(Long.parseLong(id.getText().toString()));
+                db.marcaDao().delete(marcaEntity);
+                Toast.makeText(getApplicationContext(), "Marca eliminada", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
                 finish();
 
             }
@@ -225,8 +212,8 @@ public class CreateEscuelaActivity extends AppCompatActivity implements View.OnC
     //modificar autor
     public void modificar(View view) {
         this.nombre.setEnabled(true);
+        this.descripcion.setEnabled(true);
         this.etPlannedDate.setEnabled(true);
-        this.txtidFacultad.setEnabled(true);
         this.fab.setVisibility(View.VISIBLE);
         this.btnEliminar.setVisibility(View.GONE);
         this.btnModificar.setVisibility(View.GONE);
