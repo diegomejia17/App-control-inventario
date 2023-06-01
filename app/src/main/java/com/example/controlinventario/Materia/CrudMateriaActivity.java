@@ -158,6 +158,13 @@ public class CrudMateriaActivity extends AppCompatActivity {
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                //validate no relation with other tables
+                int numero = db.libroDao().countLibrosPorMateria(Long.parseLong(id.getText().toString()));
+                if (numero > 0) {
+                    Toast.makeText(getApplicationContext(), "No se puede eliminar la materia, tiene libros asociados.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Acción de eliminación
                 MateriaEntity materia = new MateriaEntity();
                 materia.setIdMateria(Long.parseLong(id.getText().toString()));

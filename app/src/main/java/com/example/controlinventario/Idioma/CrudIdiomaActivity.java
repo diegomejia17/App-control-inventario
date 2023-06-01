@@ -147,6 +147,13 @@ public class CrudIdiomaActivity extends AppCompatActivity {
     }
 
     public void eliminar(View view) {
+        //validate no relation with other tables
+        int numero = db.libroDao().countLibrosPorIdioma(Long.parseLong(this.id.getText().toString()));
+        if (numero > 0) {
+            Toast.makeText(getApplicationContext(), "No se puede eliminar el idioma, tiene libros asociados.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         IdiomaEntity idioma = new IdiomaEntity();
         idioma.setId(Long.parseLong(this.id.getText().toString()));
         db.idiomaDao().delete(idioma);

@@ -167,6 +167,13 @@ public class CrudEditorial extends AppCompatActivity {
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                int numero = db.libroDao().countLibrosPorEditorial(Long.parseLong(id.getText().toString()));
+                if (numero > 0) {
+                    Toast.makeText(getApplicationContext(), "No se puede eliminar la editorial porque tiene libros asociados.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // Acción de eliminación
                 EditorialEntity editorial = new EditorialEntity();
                 editorial.setId(Long.parseLong(id.getText().toString()));

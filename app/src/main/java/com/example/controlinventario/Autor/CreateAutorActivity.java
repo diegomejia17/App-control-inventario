@@ -177,6 +177,12 @@ public class CreateAutorActivity extends AppCompatActivity implements View.OnCli
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                int numero = db.autorLibroDao().countLibroConAutores(Long.parseLong(id.getText().toString()));
+                if (numero > 0) {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "No se puede eliminar el autor, tiene libros asociados", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Acción de eliminación
                 AutorEntity autorEntity = new AutorEntity();
                 autorEntity.setIdAutor(Long.parseLong(id.getText().toString()));

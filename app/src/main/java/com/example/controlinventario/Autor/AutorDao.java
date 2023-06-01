@@ -17,4 +17,5 @@ public interface AutorDao extends GenericDAO<AutorEntity> {
     @Transaction
     @Query("select autor.* from AUTORLIBRO inner join autor on autorlibro.idAutor = autor.idAutor where autorlibro.idLibro = :idLibro")
     public List<AutorEntity> getAutoresPorIdLibro(Long idLibro);
+
 }
