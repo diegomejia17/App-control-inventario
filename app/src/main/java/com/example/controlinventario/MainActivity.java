@@ -15,12 +15,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String[] values = {
             "EscuelaJA.MenuEscuelaActivity","CatalogoUbicacionJA.MenuCatalogoUbicacionActivity","FacultadJA.MenuFacultadActivity",
            "Autor.AutorMenuActivity", "Libro.MenuLibroActivity", "Materia.MateriaActivity",
-            "Idioma.IdiomaActivity","Editorial.EditorialActivity","CategoriaLibro.CategoriaLibrosActivity"
+            "Idioma.IdiomaActivity","Editorial.EditorialActivity","CategoriaLibro.CategoriaLibrosActivity",
+            "Marca.MarcaMenuActivity"
     };
     String[] ViewValues = {
             "Escuela","Ubicación","Facultad",
             "Autor", "Libro", "Materia",
-            "Idioma","Editorial","Categoria"
+            "Idioma","Editorial","Categoria",
+            "Marca"
     };
 
     @Override

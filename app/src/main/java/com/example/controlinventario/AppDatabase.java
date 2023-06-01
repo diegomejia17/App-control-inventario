@@ -1,11 +1,8 @@
 package com.example.controlinventario;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-import androidx.room.Dao;
 import androidx.room.Database;
-import androidx.room.Query;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
@@ -28,19 +25,31 @@ import com.example.controlinventario.EscuelaJA.EscuelaEntity;
 import com.example.controlinventario.FacultadJA.FacultadDao;
 import com.example.controlinventario.FacultadJA.FacultadEntity;
 
-import com.example.controlinventario.FacultadJA.TriggerQueries;
-
 import com.example.controlinventario.Idioma.IdiomaDao;
 import com.example.controlinventario.Idioma.IdiomaEntity;
 import com.example.controlinventario.Libro.LibroDao;
 import com.example.controlinventario.Libro.LibroEntity;
+import com.example.controlinventario.Marca.MarcaDao;
+import com.example.controlinventario.Marca.MarcaEntity;
 import com.example.controlinventario.Materia.MateriaDao;
 import com.example.controlinventario.Materia.MateriaEntity;
 import com.example.controlinventario.manytomanytables.AutorLibroEntity;
 import com.example.controlinventario.manytomanytables.LibroAutorDAO;
 
 
-@Database(entities = {EditorialEntity.class,AutorEntity.class, LibroEntity.class, MateriaEntity.class, FacultadEntity.class, EscuelaEntity.class, IdiomaEntity.class, CategoriaLibroEntity.class, AutorLibroEntity.class, UbicacionEntity.class}, version = 1)
+@Database(entities = {
+    EditorialEntity.class,
+    AutorEntity.class,
+    LibroEntity.class,
+    MateriaEntity.class,
+    FacultadEntity.class,
+    EscuelaEntity.class,
+    IdiomaEntity.class,
+    CategoriaLibroEntity.class,
+    AutorLibroEntity.class,
+    UbicacionEntity.class,
+    MarcaEntity.class
+}, version = 2)
 @TypeConverters({DateConverter.class})
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -58,17 +67,23 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UbicacionDao ubicacionDao();
 
-
     public abstract IdiomaDao idiomaDao();
 
+    public abstract MarcaDao marcaDao();
 
     public static AppDatabase INSTANCE;
 
     public static AppDatabase getDatabase(Context context) {
 
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, "dbControlInventario").allowMainThreadQueries().addCallback(DB_CALLBACK).build();
+            INSTANCE = Room.databaseBuilder(
+                context.getApplicationContext(),
+                AppDatabase.class,
+                "dbControlInventario"
+            )
+            .allowMainThreadQueries()
+            .addCallback(DB_CALLBACK)
+            .build();
         }
         return INSTANCE;
 

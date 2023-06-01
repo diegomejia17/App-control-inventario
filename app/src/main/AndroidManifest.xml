@@ -51,6 +51,15 @@
             android:name=".Materia.findByIdMateria"
             android:exported="false" />
         <activity
+            android:name=".Marca.MarcaMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Marca.CreateMarcaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Marca.FindByIdMarcaActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
