@@ -60,6 +60,15 @@
             android:name=".Marca.FindByIdMarcaActivity"
             android:exported="false" />
         <activity
+            android:name=".Equipo.EquipoMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Equipo.CreateEquipoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Equipo.FindByIdEquipoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

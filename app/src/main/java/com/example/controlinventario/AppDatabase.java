@@ -20,6 +20,8 @@ import com.example.controlinventario.CategoriaLibro.CategoriaLibroEntity;
 import com.example.controlinventario.Commons.DateConverter;
 import com.example.controlinventario.Editorial.EditorialDao;
 import com.example.controlinventario.Editorial.EditorialEntity;
+import com.example.controlinventario.Equipo.EquipoDao;
+import com.example.controlinventario.Equipo.EquipoEntity;
 import com.example.controlinventario.EscuelaJA.EscuelaDao;
 import com.example.controlinventario.EscuelaJA.EscuelaEntity;
 import com.example.controlinventario.FacultadJA.FacultadDao;
@@ -56,8 +58,9 @@ import com.example.controlinventario.Estudiante.EstudianteEntity;
     MarcaEntity.class,
     SecretariaEntity.class,
     DocenteEntity.class,
-    EstudianteEntity.class
-}, version = 2)
+    EstudianteEntity.class,
+    EquipoEntity.class
+}, version = 3)
 
 @TypeConverters({DateConverter.class})
 
@@ -84,6 +87,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract EstudianteDao estudianteDao();
     public abstract MarcaDao marcaDao();
+
+    public abstract EquipoDao equipoDao();
 
     public static AppDatabase INSTANCE;
 

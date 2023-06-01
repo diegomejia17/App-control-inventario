@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             "Secretaria.MenuSecretariaActivity",
             "Docente.MenuDocenteActivity",
             "Estudiante.MenuEstudianteActivity",
-            "Marca.MarcaMenuActivity"
+            "Marca.MarcaMenuActivity",
+            "Equipo.EquipoMenuActivity"
     };
     String[] ViewValues = {
             "Escuela",
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             "Secretaria",
             "Docente",
             "Estudiante",
-            "Marca"
+            "Marca",
+            "Equpo"
     };
 
     @Override
